@@ -2,3 +2,7 @@
 .openai/local/
 *.zip
 __pycache__/
+*.tar.gz
+preview*.log
+qa/
+outputs/

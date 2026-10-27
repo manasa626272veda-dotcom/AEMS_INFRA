@@ -1,5 +1,9 @@
 # AEMS Infra 3D redesign
 
+## Material 3 edition
+
+The upgraded edition uses Material 3 color roles, tonal surface containers, shape tokens, pill buttons, filter chips, state layers, ripples, and responsive typography. The homepage features a larger lit 3D clean room with interactive system hotspots, airflow and exploded modes. Every equipment page includes a category-specific conceptual 3D model with drag and keyboard rotation, pause/reset controls, and an original-product photo toggle. Models are illustrative; original specifications remain available below each viewer.
+
 Complete static website redesign based on https://aemsinfra.com/.
 
 ## Preview

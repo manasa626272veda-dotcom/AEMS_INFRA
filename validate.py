@@ -13,9 +13,17 @@ for name,page in data.items():
         elif path.suffix=='.png' and not path.read_bytes().startswith(b'\x89PNG'):errors.append('Invalid PNG: '+src)
     for href in re.findall(r'href="([^"#]+)"',page['content']):
         if ':' not in href and href.endswith('.html') and not (DIST/href).exists():errors.append('Broken original link: '+href)
-for asset in ['assets/three.module.js','style.css','app.js','scene.js']:
+for asset in ['assets/three.module.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js','style.css','material.css','app.js','scene.js','equipment.js']:
     assert (DIST/asset).stat().st_size>100
 assert 'export {' in (DIST/'assets/three.module.js').read_text(encoding='utf-8')
+for name in list(data)+['products.html']:
+    shell=(DIST/name).read_text(encoding='utf-8')
+    assert 'href="material.css"' in shell, 'Material 3 styles missing: '+name
+    assert shell.index('type="importmap"') < shell.index('type="module"'), 'Import map must precede modules'
+for module in ['app.js','scene.js','equipment.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js']:
+    file=DIST/module
+    for src in re.findall(r"from ['\"]([^'\"]+)['\"]",file.read_text(encoding='utf-8')):
+        assert (file.parent/src).is_file(), 'Missing module: '+src
 tables=sum(p['content'].count('<table>') for p in data.values())
 assert tables>=3, 'Specification tables missing'
 if errors:raise SystemExit('\n'.join(errors))
