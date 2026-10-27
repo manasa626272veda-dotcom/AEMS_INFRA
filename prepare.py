@@ -1,4 +1,4 @@
-import json, html
+import json, html, subprocess
 from pathlib import Path
 ROOT=Path(__file__).parent
 DIST=ROOT/'dist'
@@ -15,3 +15,4 @@ manifest=ROOT/'.openai'/'hosting.json'
 config=json.loads(manifest.read_text());config['static']={'directory':'dist'}
 manifest.write_text(json.dumps(config,indent=2)+'\n')
 print('Prepared',len(data)+1,'static routes')
+subprocess.run(['node',str(ROOT/'prepare-routes.mjs')],check=True,cwd=ROOT)

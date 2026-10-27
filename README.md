@@ -10,6 +10,20 @@ Complete static website redesign based on https://aemsinfra.com/.
 
 Run `node serve.mjs`, then open http://127.0.0.1:4173.
 
+## Route reliability and reference pass
+
+All original pages work with `.html`, extensionless, and trailing-slash URLs. This fixes hosting clean-URL normalization such as `/hvacservices.html` becoming `/hvacservices`. A shared route resolver and generated directory entries keep both browser rendering and static hosting consistent. Root-relative assets and explicitly scoped fragment links support direct links and refreshes. All 14 products and Affiliations are available from the main navigation.
+
+The reference pass uses GSAP 3.14.2 with ScrollTrigger for progressive entrance and scroll motion. Taste Skill informed the audit, hierarchy and content preservation; 21st and ThreeUI informed spotlight, spatial product interaction and shader concepts. Components and models are authored for AEMS; no paid component sources are included. The original 65 images and technical specification content remain local. Six service views now include the interactive facility, and airflow has a procedural shader layer.
+
+References: https://www.tasteskill.dev/, https://gsap.com/, https://21st.dev/, https://threeui.com/.
+
+## Validation
+
+Run `python prepare.py` and `python validate.py`. For the functional suite, first run `npm --prefix qa install --no-audit --no-fund jsdom`, then `node --test test/site.test.mjs`.
+
+The suite covers 78 DOM page renderings (26 pages in three URL forms), 4,335 internal link instances, all referenced image and fragment targets, 117 HTTP page URLs, aliases, proper 404s, catalogue filters/search, mobile navigation and Escape, product enquiry selection, contact validation and email preparation, and graceful WebGL fallback. It uses an isolated DOM test environment and does not claim a visual browser or GPU-rendering verification.
+
 ## Site coverage
 
 All 25 linked original HTML routes are retained. The new product catalogue adds `products.html`, with 14 searchable products in five categories. Includes About, Services, five service detail pages, 14 product detail pages, Clients, Affiliations and Contact.

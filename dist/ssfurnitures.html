@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/">
   <title>SS Furnitures | AEMS Infra</title>
   <meta name="description" content="Turnkey clean room technology, HVAC systems and MEP solutions. Explore AEMS engineering services and clean room equipment.">
   <meta name="theme-color" content="#082f32">
-  <link rel="icon" href="assets/img/AEMS_logo.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="material.css">
+  <link rel="icon" href="assets/img/AEMS_logo.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="material.css"><link rel="stylesheet" href="experience.css">
+  <script src="assets/gsap.min.js" defer></script><script src="assets/ScrollTrigger.min.js" defer></script>
   <script type="importmap">{"imports":{"three":"./assets/three.module.js"}}</script>
   <script type="module" src="app.js"></script>
 </head>
@@ -17,7 +19,7 @@
     <nav id="navigation" aria-label="Main navigation">
       <a href="index.html" class="nav-home">Home</a><a href="about.html">About us</a>
       <details class="nav-drop"><summary>Solutions <span>⌄</span></summary><div class="dropdown"><a href="service.html">All engineering services ↗</a><a href="cleanroomequipment.html">Clean room solutions</a><a href="hvacservices.html">HVAC systems & retrofits</a><a href="mepcontractors.html">MEP contracting</a><a href="validations.html">Testing & validation</a><a href="facilityengservices.html">Facility maintenance</a></div></details>
-      <a href="products.html">Products</a><a href="clients.html">Our clients</a><a class="nav-cta" href="contact.html">Let’s build together <span>↗</span></a>
+      <details class="nav-drop product-menu"><summary>Products <span>⌄</span></summary><div class="dropdown product-dropdown"><div><h3>Clean rooms</h3><a href="cleanroompanels.html">Clean room panels</a><a href="galvanizedironCR.html">GI clean room partitions</a><a href="cleanroomdoors.html">Clean room doors</a><h3>Transfer systems</h3><a href="staticpassbox.html">Static pass box</a><a href="dynamicpassbox.html">Dynamic pass box</a><a href="airshower.html">Air shower</a></div><div><h3>Airflow & containment</h3><a href="horizontallaminarflow.html">Horizontal laminar flow</a><a href="verticallaminarflow.html">Vertical laminar flow</a><a href="reverselaminarflow.html">Reverse laminar flow</a><a href="biosafetycabinet.html">Biosafety cabinet</a><h3>HVAC & furniture</h3><a href="airhandlingunit.html">Air handling unit</a><a href="hvacsystems.html">HVAC systems</a><a href="labfurniture.html">Laboratory furniture</a><a href="ssfurnitures.html">Stainless steel furniture</a></div><a class="all-products" href="products.html">Explore the complete catalogue <span>↗</span></a></div></details><a href="clients.html">Our clients</a><a href="affiliations.html">Affiliations</a><a class="nav-cta" href="contact.html">Let’s build together <span>↗</span></a>
     </nav>
   </header>
   <main id="main"></main>

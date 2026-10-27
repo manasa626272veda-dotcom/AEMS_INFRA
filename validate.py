@@ -13,14 +13,18 @@ for name,page in data.items():
         elif path.suffix=='.png' and not path.read_bytes().startswith(b'\x89PNG'):errors.append('Invalid PNG: '+src)
     for href in re.findall(r'href="([^"#]+)"',page['content']):
         if ':' not in href and href.endswith('.html') and not (DIST/href).exists():errors.append('Broken original link: '+href)
-for asset in ['assets/three.module.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js','style.css','material.css','app.js','scene.js','equipment.js']:
+for asset in ['assets/three.module.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js','assets/gsap.min.js','assets/ScrollTrigger.min.js','style.css','material.css','experience.css','app.js','scene.js','equipment.js','routes.js','motion.js']:
     assert (DIST/asset).stat().st_size>100
 assert 'export {' in (DIST/'assets/three.module.js').read_text(encoding='utf-8')
 for name in list(data)+['products.html']:
     shell=(DIST/name).read_text(encoding='utf-8')
     assert 'href="material.css"' in shell, 'Material 3 styles missing: '+name
+    assert '<base href="/">' in shell, 'Root asset base missing: '+name
+    assert 'href="experience.css"' in shell, 'Enhanced experience styles missing: '+name
+    if name!='index.html':
+        assert (DIST/name.replace('.html','')/'index.html').is_file(), 'Trailing slash entry missing: '+name
     assert shell.index('type="importmap"') < shell.index('type="module"'), 'Import map must precede modules'
-for module in ['app.js','scene.js','equipment.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js']:
+for module in ['app.js','scene.js','equipment.js','routes.js','motion.js','assets/RoomEnvironment.js','assets/RoundedBoxGeometry.js']:
     file=DIST/module
     for src in re.findall(r"from ['\"]([^'\"]+)['\"]",file.read_text(encoding='utf-8')):
         assert (file.parent/src).is_file(), 'Missing module: '+src

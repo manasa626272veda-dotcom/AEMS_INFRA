@@ -5,7 +5,7 @@ export function createFacility(container) {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer;
   try { renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); }
-  catch { container.innerHTML='<div class="model-fallback"><img src="assets/img/about-us-img.png" alt="AEMS clean room environment"></div>';return; }
+  catch { container.innerHTML='<div class="model-fallback"><img src="assets/img/about-us-img.png" alt="AEMS clean room environment"></div>';container.closest('.scene-shell')?.querySelectorAll('button').forEach(b=>b.disabled=true);container.setAttribute('aria-label','AEMS facility image. Interactive 3D is unavailable on this device.');return; }
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;
@@ -72,6 +72,8 @@ export function createFacility(container) {
   const grid=new THREE.GridHelper(20,30,0x367064,0x367064);grid.position.y=-.35;grid.material.transparent=true;grid.material.opacity=.22;scene.add(grid);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(6.4,.012,6,120),new THREE.MeshBasicMaterial({color:0x72a688,transparent:true,opacity:.35}));ring.rotation.x=Math.PI/2;ring.position.y=-.34;scene.add(ring);
   const paths=[[-2.4,-.8],[1.1,-1],[2.45,1.45]].map(([x,z])=>new THREE.CatmullRomCurve3([new THREE.Vector3(x,2.6,z),new THREE.Vector3(x,1.7,z),new THREE.Vector3(x+.4,.3,z+.5)]));
+  const streamMaterial=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uTime:{value:0},uStrength:{value:.25}},vertexShader:'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'varying vec2 vUv; uniform float uTime; uniform float uStrength; void main(){float pulse=pow(max(0.0,sin(vUv.x*68.0-uTime*5.0)),8.0);float edge=1.0-abs(vUv.y-.5)*2.0;gl_FragColor=vec4(.67,1.0,.57,pulse*edge*uStrength);}' });
+  const streams=paths.map(path=>{const mesh=new THREE.Mesh(new THREE.TubeGeometry(path,56,.105,10,false),streamMaterial);root.add(mesh);return mesh;});
   const dotmat=new THREE.MeshBasicMaterial({color:0xd8ffb3,transparent:true,opacity:.7});
   const dots=paths.flatMap((path,j)=>Array.from({length:15},(_,i)=>{const mesh=new THREE.Mesh(new THREE.SphereGeometry(.028,6,6),dotmat);root.add(mesh);return{mesh,path,offset:i/15+j*.12};}));
   let angle=.63,elevation=.49,distance=17.8,mode='all',paused=reduced,dragging=false,lastX=0,lastY=0,t=0,roofTarget=0;
@@ -83,7 +85,7 @@ export function createFacility(container) {
   container.addEventListener('pointerup',()=>dragging=false);container.addEventListener('pointercancel',()=>dragging=false);
   const shell=container.closest('.scene-shell');
   container.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;e.preventDefault();if(e.key==='ArrowLeft')angle-=.12;if(e.key==='ArrowRight')angle+=.12;if(e.key==='ArrowUp')elevation=Math.min(.85,elevation+.05);if(e.key==='ArrowDown')elevation=Math.max(.2,elevation-.05);if(e.key==='Home'){angle=.63;elevation=.49;}});
-  function changeMode(action){mode=action;roofTarget=action==='exploded'?1.8:0;dotmat.opacity=action==='air'?1:.7;dots.forEach(({mesh})=>mesh.scale.setScalar(action==='air'?2.1:1));glass.opacity=action==='air'?.07:.18;teal.emissive.set(action==='air'?0x0a5545:0x000000);shell.querySelectorAll('[data-scene="all"],[data-scene="air"],[data-scene="exploded"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scene===action)));const index=shell.querySelector('.model-index');if(index)index.textContent=action==='all'?'01 / 03':action==='air'?'02 / 03':'03 / 03';}
+  function changeMode(action){mode=action;roofTarget=action==='exploded'?1.8:0;streamMaterial.uniforms.uStrength.value=action==='air'?.75:.25;dotmat.opacity=action==='air'?1:.7;dots.forEach(({mesh})=>mesh.scale.setScalar(action==='air'?2.1:1));glass.opacity=action==='air'?.07:.18;teal.emissive.set(action==='air'?0x0a5545:0x000000);shell.querySelectorAll('[data-scene="all"],[data-scene="air"],[data-scene="exploded"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scene===action)));const index=shell.querySelector('.model-index');if(index)index.textContent=action==='all'?'01 / 03':action==='air'?'02 / 03':'03 / 03';}
   shell.querySelectorAll('[data-focus]').forEach(button=>button.addEventListener('click',()=>{const kind=button.dataset.focus;changeMode(kind==='hvac'?'air':kind==='mep'?'exploded':'all');if(kind==='room'){angle=.63;elevation=.49;}}));
   shell.querySelectorAll('[data-scene]').forEach(button=>button.addEventListener('click',()=>{
     const action=button.dataset.scene;
@@ -97,8 +99,10 @@ export function createFacility(container) {
     if(!dragging&&!paused)angle+=Math.sin(t*.25)*.00014;
     ahu.position.y=THREE.MathUtils.lerp(ahu.position.y,roofTarget,.06);vents.position.y=THREE.MathUtils.lerp(vents.position.y,roofTarget*.55,.06);
     fan.rotation.z=paused?fan.rotation.z:t*2.5;
+    streamMaterial.uniforms.uTime.value=t;streams.forEach(mesh=>mesh.visible=mode!=='exploded');
     dots.forEach(({mesh,path,offset})=>{mesh.visible=mode!=='exploded';mesh.position.copy(path.getPoint((t*.17+offset)%1));});
     updateCamera();renderer.render(scene,camera);
   }requestAnimationFrame(animate);
   container.setAttribute('aria-label','Interactive 3D conceptual clean room facility. Drag with a mouse to rotate. Use the controls to explore airflow and equipment layers.');
+  return {setMode:changeMode};
 }

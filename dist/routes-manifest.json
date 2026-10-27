@@ -1,0 +1,156 @@
+{
+  "pages": [
+    {
+      "filename": "about.html",
+      "path": "/about",
+      "title": "About AEMS"
+    },
+    {
+      "filename": "affiliations.html",
+      "path": "/affiliations",
+      "title": "Affiliations"
+    },
+    {
+      "filename": "airhandlingunit.html",
+      "path": "/airhandlingunit",
+      "title": "Air Handling Unit (AHU)"
+    },
+    {
+      "filename": "airshower.html",
+      "path": "/airshower",
+      "title": "Air Shower"
+    },
+    {
+      "filename": "biosafetycabinet.html",
+      "path": "/biosafetycabinet",
+      "title": "Bio Safety Cabin"
+    },
+    {
+      "filename": "cleanroomdoors.html",
+      "path": "/cleanroomdoors",
+      "title": "Clean Room Doors"
+    },
+    {
+      "filename": "cleanroomequipment.html",
+      "path": "/cleanroomequipment",
+      "title": "Clean Room Equipment Suppliers"
+    },
+    {
+      "filename": "cleanroompanels.html",
+      "path": "/cleanroompanels",
+      "title": "Clean Room Modular Panels"
+    },
+    {
+      "filename": "clients.html",
+      "path": "/clients",
+      "title": "Clients"
+    },
+    {
+      "filename": "contact.html",
+      "path": "/contact",
+      "title": "Contact Us"
+    },
+    {
+      "filename": "dynamicpassbox.html",
+      "path": "/dynamicpassbox",
+      "title": "Dynamic Pass Box"
+    },
+    {
+      "filename": "facilityengservices.html",
+      "path": "/facilityengservices",
+      "title": "Facility Engineering Maintenance Services"
+    },
+    {
+      "filename": "galvanizedironCR.html",
+      "path": "/galvanizedironCR",
+      "title": "Galvanized Iron Clean Room Partitions"
+    },
+    {
+      "filename": "horizontallaminarflow.html",
+      "path": "/horizontallaminarflow",
+      "title": "Horizontal Laminar Air Flow Unit"
+    },
+    {
+      "filename": "hvacservices.html",
+      "path": "/hvacservices",
+      "title": "HVAC Systems Suppliers"
+    },
+    {
+      "filename": "hvacsystems.html",
+      "path": "/hvacsystems",
+      "title": "HVAC Systems"
+    },
+    {
+      "filename": "index.html",
+      "path": "/",
+      "title": "Clean Room Technology"
+    },
+    {
+      "filename": "labfurniture.html",
+      "path": "/labfurniture",
+      "title": "Lab Furniture"
+    },
+    {
+      "filename": "mepcontractors.html",
+      "path": "/mepcontractors",
+      "title": "MEP Contractors"
+    },
+    {
+      "filename": "reverselaminarflow.html",
+      "path": "/reverselaminarflow",
+      "title": "Reverse Laminar Air Flow Unit"
+    },
+    {
+      "filename": "service.html",
+      "path": "/service",
+      "title": "SERVICES"
+    },
+    {
+      "filename": "ssfurnitures.html",
+      "path": "/ssfurnitures",
+      "title": "SS Furnitures"
+    },
+    {
+      "filename": "staticpassbox.html",
+      "path": "/staticpassbox",
+      "title": "Static Pass Box"
+    },
+    {
+      "filename": "validations.html",
+      "path": "/validations",
+      "title": "Validations"
+    },
+    {
+      "filename": "verticallaminarflow.html",
+      "path": "/verticallaminarflow",
+      "title": "Vertical Laminar Air Flow Unit"
+    },
+    {
+      "filename": "products.html",
+      "path": "/products",
+      "title": "Product catalogue"
+    }
+  ],
+  "aliases": {
+    "home": "index.html",
+    "services": "service.html",
+    "solutions": "service.html",
+    "about-us": "about.html",
+    "contact-us": "contact.html",
+    "product-catalogue": "products.html",
+    "clean-room-equipment-suppliers-in-hyderabad": "index.html",
+    "clean-room-equipment": "cleanroomequipment.html",
+    "hvac-services": "hvacservices.html",
+    "mep-contractors": "mepcontractors.html",
+    "facility-engineering-services": "facilityengservices.html",
+    "clean-room-panels": "cleanroompanels.html",
+    "clean-room-doors": "cleanroomdoors.html",
+    "air-handling-unit": "airhandlingunit.html",
+    "air-shower": "airshower.html",
+    "biosafety-cabinet": "biosafetycabinet.html",
+    "static-passbox": "staticpassbox.html",
+    "dynamic-passbox": "dynamicpassbox.html",
+    "lab-furniture": "labfurniture.html",
+    "ss-furniture": "ssfurnitures.html"
+  }
+}

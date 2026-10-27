@@ -1,5 +1,7 @@
 import {createFacility} from './scene.js';
 import {createEquipment} from './equipment.js';
+import {resolvePage,pagePath} from './routes.js';
+import {initMotion} from './motion.js';
 const main=document.querySelector('main');
 const arrow='↗';
 const icons={
@@ -35,8 +37,8 @@ const products=[
   ['ssfurnitures.html','Stainless steel furniture','Furniture','ssfurnitures.png','Stainless steel equipment for clean room applications.']
 ];
 let content={};
-try {const response=await fetch('content.json');if(!response.ok)throw Error();content=await response.json();}catch{main.innerHTML='<section class="section wrap"><h1>Unable to load this page</h1><p>Please refresh, or <a href="mailto:info@aemsinfra.com">contact AEMS</a>.</p></section>';}
-const filename=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop()||'index.html');
+try {const response=await fetch('/content.json');if(!response.ok)throw Error();content=await response.json();}catch{main.innerHTML='<section class="section wrap"><h1>Unable to load this page</h1><p>Please refresh, or <a href="mailto:info@aemsinfra.com">contact AEMS</a>.</p></section>';}
+const filename=resolvePage(location.pathname,[...Object.keys(content),'products.html']);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const button=(url,label,style='')=>`<a class="button ${style}" href="${url}">${label}<span>${arrow}</span></a>`;
 const cta=()=>`<section class="cta-section"><div class="wrap cta-box"><div><h2>Let’s engineer what’s next.</h2><p>A new facility. A smarter system. A better environment. Start with a conversation.</p></div>${button('contact.html','Discuss your project','dark')}</div></section>`;
@@ -68,21 +70,37 @@ main.innerHTML=pageHero(esc(title),esc(description),category)+`<section class="s
 function notFound(){main.innerHTML=pageHero('Let’s get you<br>to the right place.','This page could not be found. Explore our complete range of solutions and products.','Page not found')+`<section class="section wrap"><div class="actions">${button('index.html','Return home')}${button('products.html','Browse products','light')}</div></section>`;}
 if(Object.keys(content).length){if(filename==='index.html')home();else if(filename==='products.html')catalogue();else if(filename==='service.html')servicesPage();else if(filename==='about.html')about();else if(['clients.html','affiliations.html'].includes(filename))gallery(filename);else if(filename==='contact.html')contact();else detail(filename);}
 const selectedProduct=products.find(p=>p[0]===filename);
+const selectedService=services.find(s=>s[0]===filename);
+if(Object.keys(content).length&&(selectedService||filename==='service.html')){
+  const paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const title=selectedService?.[1]||'Your facility. One connected environment.';
+  const description=selectedService?.[2]||'Clean rooms, air handling and MEP systems—explore how the layers of a facility work together.';
+  document.querySelector('.page-hero').insertAdjacentHTML('afterend',`<section class="service-experience"><div class="wrap service-world"><div class="scene-shell"><div class="scene-canvas" role="img" tabindex="0"></div><div class="scene-toolbar" role="group" aria-label="Explore engineering systems"><button data-scene="all" aria-pressed="true">◇ Facility</button><button data-scene="air" aria-pressed="false">≋ Airflow</button><button data-scene="exploded" aria-pressed="false">▱ Exploded</button></div><div class="scene-status"><button data-scene="motion" class="motion-button" aria-pressed="${paused}">${paused?'Play motion':'Pause motion'}</button><button data-scene="reset" class="motion-button">Reset view ↺</button></div></div><div class="service-world-copy"><div class="eyebrow">Engineering, from a new perspective</div><h2>${esc(title)}</h2><p>${esc(description)}</p><a href="#service-details" class="text-link">Explore the full service <span>↓</span></a><small>Interactive concept environment. Drag or use the arrow keys to rotate. Switch layers to explore the engineering.</small></div></div></section>`);
+  document.querySelector('.technical')?.setAttribute('id','service-details');
+  const world=createFacility(document.querySelector('.service-world .scene-canvas'));
+  if(filename==='hvacservices.html')world?.setMode('air');
+  if(filename==='mepcontractors.html')world?.setMode('exploded');
+}
 if(selectedProduct&&Object.keys(content).length){
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelector('.page-hero').insertAdjacentHTML('afterend',`<section class="equipment-showcase"><div class="wrap equipment-layout"><div class="equipment-stage"><div class="equipment-tools" role="group" aria-label="Product viewer"><button data-equipment="model" aria-pressed="true">◇ 3D model</button><button data-equipment="photo" aria-pressed="false">Product photo</button><button data-equipment="motion" aria-pressed="${reduced}">${reduced?'Play motion':'Pause motion'}</button></div><div class="equipment-canvas" role="img" aria-label="Conceptual 3D model of ${esc(selectedProduct[1])}. Drag to rotate, or use left and right arrow keys." tabindex="0"></div><span class="equipment-hint">Drag to explore · Arrow keys to rotate</span><button class="equipment-reset" data-equipment="reset" aria-label="Reset product view">↺</button></div><div class="equipment-copy"><div class="eyebrow">A new perspective</div><h2>Get closer to<br>every detail.</h2><p>${selectedProduct[4]} Explore the concept in 3D, then review the original product photography and full technical information.</p><a class="text-link" href="#technical-details">View technical details <span>↓</span></a><div class="equipment-note">Concept model for illustration. Refer to the original specifications and confirm construction details with the AEMS engineering team.</div></div></div></section>`);
   document.querySelector('.technical').id='technical-details';createEquipment(document.querySelector('.equipment-canvas'),filename,productImage(selectedProduct));
 }
 document.querySelector('#year').textContent=new Date().getFullYear();
-document.querySelector('.mobile-toggle').addEventListener('click',e=>{const open=document.querySelector('#navigation').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',String(open));e.currentTarget.setAttribute('aria-label',open?'Close navigation':'Open navigation');e.currentTarget.textContent=open?'×':'☰';});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('details[open]').forEach(d=>d.open=false);document.querySelector('#navigation').classList.remove('open');document.querySelector('.mobile-toggle').setAttribute('aria-expanded','false');}});
+function setMenuState(open){const toggle=document.querySelector('.mobile-toggle');document.querySelector('#navigation').classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');toggle.textContent=open?'×':'☰';}
+document.querySelector('.mobile-toggle').addEventListener('click',()=>setMenuState(!document.querySelector('#navigation').classList.contains('open')));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('details[open]').forEach(d=>d.open=false);setMenuState(false);}});
 document.addEventListener('click',e=>document.querySelectorAll('details[open]').forEach(d=>{if(!d.contains(e.target))d.open=false;}));
 document.querySelectorAll('.technical table').forEach(table=>{const wrap=document.createElement('div');wrap.className='table-scroll';table.before(wrap);wrap.append(table);});
 document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{if(!img.dataset.fallback){img.dataset.fallback='1';img.src='assets/img/about-us-img.png';}}));
 if(filename!=='index.html'){const title=document.querySelector('h1')?.textContent.replace(/\s+/g,' ').trim();if(title)document.title=`${title} | AEMS Infra`;}
 if(location.hash){requestAnimationFrame(()=>document.getElementById(location.hash.slice(1))?.scrollIntoView());}
-document.querySelectorAll('nav>a').forEach(a=>{if(a.getAttribute('href')===filename)a.setAttribute('aria-current','page');});
+document.querySelectorAll('nav a').forEach(a=>{if(a.getAttribute('href')===filename){a.setAttribute('aria-current','page');a.closest('details')?.querySelector('summary')?.setAttribute('aria-current','page');}});
 const backTop=document.createElement('button');backTop.className='back-top';backTop.type='button';backTop.textContent='↑';backTop.setAttribute('aria-label','Back to top');document.body.append(backTop);backTop.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));
 const updateScroll=()=>{document.querySelector('.header').classList.toggle('scrolled',scrollY>25);backTop.classList.toggle('visible',scrollY>750);};addEventListener('scroll',updateScroll,{passive:true});updateScroll();
 document.addEventListener('pointerdown',e=>{const target=e.target.closest('.button,.nav-cta,.filter,.scene-toolbar button,.equipment-tools button');if(!target||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const rect=target.getBoundingClientRect(),size=Math.max(rect.width,rect.height);const ripple=document.createElement('span');ripple.className='ripple';ripple.style.width=ripple.style.height=`${size}px`;ripple.style.left=`${e.clientX-rect.left-size/2}px`;ripple.style.top=`${e.clientY-rect.top-size/2}px`;target.append(ripple);setTimeout(()=>ripple.remove(),750);});
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const reveal=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('md-enter');reveal.unobserve(entry.target);}}),{threshold:.08});document.querySelectorAll('.section-head,.about-strip,.process-step').forEach(el=>reveal.observe(el));}
+if(filename){const canonical=document.createElement('link');canonical.rel='canonical';canonical.href=new URL(pagePath(filename),location.origin).href;document.head.append(canonical);}
+// A root <base> keeps assets stable on /page/, but fragments must stay on this page.
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.setAttribute('href',`${location.pathname}${location.search}${a.getAttribute('href')}`));
+document.querySelectorAll('main .section').forEach((section,i)=>section.setAttribute('data-section',String(i)));
+initMotion();

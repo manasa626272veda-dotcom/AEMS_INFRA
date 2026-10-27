@@ -8,7 +8,7 @@ export function createEquipment(container, filename, imageUrl) {
   const shell=container.closest('.equipment-stage');
   let renderer;
   try {renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}
-  catch {container.innerHTML=`<img class="stage-image" src="${imageUrl}" alt="Original AEMS product photograph">`;shell.querySelectorAll('[data-equipment]').forEach(b=>{if(b.dataset.equipment==='model'||b.dataset.equipment==='motion'||b.dataset.equipment==='reset')b.disabled=true;});return;}
+  catch {container.innerHTML=`<img class="stage-image" src="${imageUrl}" alt="Original AEMS product photograph">`;shell.querySelectorAll('[data-equipment]').forEach(b=>{b.disabled=true;if(['model','photo'].includes(b.dataset.equipment))b.setAttribute('aria-pressed',String(b.dataset.equipment==='photo'));});const hint=shell.querySelector('.equipment-hint');if(hint)hint.textContent='Product photo · Interactive 3D unavailable on this device';return;}
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
   container.append(renderer.domElement);
   const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(35,1,.1,100);camera.position.set(6,3.5,7);camera.lookAt(0,1.4,0);
