@@ -8,8 +8,8 @@ export function Header({menuOpen,scrolled,onToggle,route}){
  useEffect(()=>{
   const opened=compact&&menuOpen;document.body.classList.toggle('menu-open',opened);
   const background=[document.querySelector('main'),document.querySelector('footer')];background.forEach(el=>{if(el)el.inert=opened;});
-  if(opened){header.current.querySelector('nav a')?.focus();wasOpen.current=true;}else if(wasOpen.current){header.current.querySelector('.mobile-toggle')?.focus();wasOpen.current=false;}
-  const trap=e=>{if(!opened||e.key!=='Tab')return;const items=[...header.current.querySelectorAll('a[href],button:not([disabled]),summary')].filter(el=>el.getClientRects().length);const first=items[0],last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}};
+  if(opened){header.current.querySelector('nav').scrollTop=0;header.current.querySelector('nav a')?.focus({preventScroll:true});wasOpen.current=true;}else if(wasOpen.current){header.current.querySelector('.mobile-toggle')?.focus({preventScroll:true});wasOpen.current=false;}
+  const trap=e=>{if(!opened||e.key!=='Tab')return;const items=[...header.current.querySelectorAll('a[href],button:not([disabled]),summary')].filter(el=>el.getClientRects().length);const first=items[0],last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus({preventScroll:true});}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus({preventScroll:true});}};
   document.addEventListener('keydown',trap);return ()=>{document.removeEventListener('keydown',trap);document.body.classList.remove('menu-open');background.forEach(el=>{if(el)el.inert=false;});};
  },[compact,menuOpen]);
  const link=(href,label,icon,className='')=><a href={href} className={className} aria-current={href===route?'page':undefined}><Icon name={icon} className="nav-link-icon"/><span>{label}</span></a>;

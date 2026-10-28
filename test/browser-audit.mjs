@@ -13,6 +13,8 @@ for(const width of (process.env.CONTRAST_ONLY?[]:[320,360,390,430,768,1024,1440,
  for(const route of routes){
   await page.goto(origin+'/'+route,{waitUntil:'domcontentloaded',timeout:15000});await page.waitForSelector('main h1');await page.waitForTimeout(60);
   const data=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,bodyWidth:document.documentElement.scrollWidth,broken:[...document.images].filter(i=>i.getAttribute("src")&&i.complete&&!i.naturalWidth).map(i=>i.src),h1:document.querySelector('h1').textContent}));
+  if(width===390){await page.evaluate(()=>scrollTo(0,1000));await page.waitForTimeout(30);await page.locator('.mobile-toggle').click();data.menuAfterScroll=await page.locator('#navigation').evaluate(el=>{const r=el.getBoundingClientRect();return r.height>=innerHeight-90&&r.top>=0&&r.bottom<=innerHeight+1&&el.contains(document.elementFromPoint(innerWidth/2,innerHeight/2));});await page.keyboard.press('Escape');if(!data.menuAfterScroll)data.overflow=true;}
+  data.unwantedContactBar=await page.locator('.contact-rail').count();if(data.unwantedContactBar)data.overflow=true;
   results.push({width,route,...data});
  }
  console.log(`Checked ${routes.length} pages at ${width}px`);

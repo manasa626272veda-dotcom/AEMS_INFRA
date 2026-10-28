@@ -150,7 +150,7 @@ test('Customer homepage solution tabs, keyboard navigation and 3D equipment sele
     d.querySelector('[data-discovery="6"]').click();
     assert.equal(d.querySelector('#discovery-title').textContent,'Static pass box');
     assert.ok(d.querySelectorAll('.faq-list details').length>=4);
-    assert.ok(d.querySelector('.contact-rail a[href="tel:+919000230419"]'));
+    assert.equal(d.querySelector('.contact-rail'),null);assert.ok(d.querySelector('.header a[href="contact.html"]'));
   }finally{dom.window.close();}
 });
 
