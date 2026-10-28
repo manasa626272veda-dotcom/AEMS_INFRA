@@ -38,7 +38,7 @@ npm run test:browser
 npm run test:motion
 ```
 
-`npm test` mounts the production React bundle and covers 78 page renderings, 4,428 internal links, 117 HTTP URLs, catalogue filtering/search, navigation, enquiry preparation, photo controls and WebGL fallback. Browser tests use an isolated localhost Chromium context. See `VALIDATION.md` for results and limits.
+`npm test` mounts the production React bundle and covers 78 page renderings, 4,506 internal links, 117 HTTP URLs, catalogue filtering/search, navigation, enquiry preparation, photo controls and WebGL fallback. Browser tests use an isolated localhost Chromium context. See `VALIDATION.md` for results and limits.
 
 `python validate.py` is an optional source/asset audit. `analyze_photos.py` uses Pillow to regenerate image-margin metadata if original photos change; copy its JSON output into `public/photo-bounds.json` before rebuilding.
 
@@ -47,3 +47,5 @@ npm run test:motion
 The existing private Sites identity remains in `.openai/hosting.json`. Publish the built `dist/` output through the supported Sites workflow. This separately hosted redesign does not change the original `aemsinfra.com` domain.
 
 The enquiry form validates information and prepares an email link. Visitors review and send it in their own email app; there is no automatic submission service. 3D models are conceptual illustrations, and the retained technical specifications remain the source of engineering detail. Reduced-motion preferences are supported. Original low-resolution photos retain their source resolution.
+
+Mobile/desktop navigation QA: `node test/mobile-priority.mjs`. The header component lives in `src/header.jsx`, shared SVG icons in `src/icons.jsx`, and the final responsive usability styles in `public/mobile.css`. The original Vercel configuration is preserved.

@@ -91,7 +91,7 @@ export function createFacility(container) {
   shell.querySelectorAll('[data-focus]').forEach(button=>button.addEventListener('click',()=>{const kind=button.dataset.focus;changeMode(kind==='hvac'?'air':kind==='mep'?'exploded':'all');if(kind==='room'){angle=.63;elevation=.49;}}));
   shell.querySelectorAll('[data-scene]').forEach(button=>button.addEventListener('click',()=>{
     const action=button.dataset.scene;
-    if(action==='motion'){paused=!paused;button.setAttribute('aria-pressed',String(paused));button.textContent=paused?'Play motion':'Pause motion';return;}
+    if(action==='motion'){paused=!paused;button.setAttribute('aria-pressed',String(paused));const label=button.querySelector('[data-motion-label]')||button;label.textContent=paused?'Play motion':'Pause motion';return;}
     if(action==='reset'){angle=.63;elevation=.49;changeMode('all');return;}
     changeMode(action);
   }));

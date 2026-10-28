@@ -101,7 +101,7 @@ test('Mobile navigation, Escape and service anchors work',async()=>{
   try{
     const menu=d.querySelector('.mobile-toggle');menu.click();assert.equal(menu.getAttribute('aria-expanded'),'true');
     d.dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'Escape'}));
-    assert.equal(menu.getAttribute('aria-expanded'),'false');assert.equal(menu.textContent,'☰');assert.equal(menu.getAttribute('aria-label'),'Open navigation');
+    assert.equal(menu.getAttribute('aria-expanded'),'false');assert.ok(menu.querySelector('svg[aria-hidden="true"]'));assert.equal(menu.getAttribute('aria-label'),'Open navigation');
     assert.ok(d.getElementById('service-details'));assert.ok(d.getElementById('retrofit'));
     assert.ok(d.querySelector('.service-world .scene-canvas'));
   }finally{dom.window.close();}

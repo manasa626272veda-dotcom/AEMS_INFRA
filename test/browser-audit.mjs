@@ -8,7 +8,7 @@ console.log('Server ready',origin);const browser=await chromium.launch({headless
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const content=JSON.parse(await readFile('dist/content.json','utf8'));const routes=[...Object.keys(content),'products.html'];const results=[];const contrast=[];
 try{
-for(const width of (process.env.CONTRAST_ONLY?[]:[320,390,768,1024,1440,1920])){
+for(const width of (process.env.CONTRAST_ONLY?[]:[320,360,390,430,768,1024,1440,1920])){
  await page.setViewportSize({width,height:1000});
  for(const route of routes){
   await page.goto(origin+'/'+route,{waitUntil:'domcontentloaded',timeout:15000});await page.waitForSelector('main h1');await page.waitForTimeout(60);

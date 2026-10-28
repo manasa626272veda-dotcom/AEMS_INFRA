@@ -1,0 +1,22 @@
+import React,{useState,useEffect,useRef} from 'react';
+import {Icon} from './icons.jsx';
+import {products,services} from './data.js';
+const groups=[['Clean rooms',[0,1,2]],['Transfer systems',[6,7,8]],['Airflow & containment',[3,4,5,9]],['HVAC & furniture',[11,12,10,13]]];
+export function Header({menuOpen,scrolled,onToggle,route}){
+ const [compact,setCompact]=useState(()=>window.innerWidth<=1100);const header=useRef(null);const wasOpen=useRef(false);
+ useEffect(()=>{const resize=()=>{setCompact(window.innerWidth<=1100);};window.addEventListener('resize',resize);return ()=>window.removeEventListener('resize',resize);},[]);
+ useEffect(()=>{
+  const opened=compact&&menuOpen;document.body.classList.toggle('menu-open',opened);
+  const background=[document.querySelector('main'),document.querySelector('footer')];background.forEach(el=>{if(el)el.inert=opened;});
+  if(opened){header.current.querySelector('nav a')?.focus();wasOpen.current=true;}else if(wasOpen.current){header.current.querySelector('.mobile-toggle')?.focus();wasOpen.current=false;}
+  const trap=e=>{if(!opened||e.key!=='Tab')return;const items=[...header.current.querySelectorAll('a[href],button:not([disabled]),summary')].filter(el=>el.getClientRects().length);const first=items[0],last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}};
+  document.addEventListener('keydown',trap);return ()=>{document.removeEventListener('keydown',trap);document.body.classList.remove('menu-open');background.forEach(el=>{if(el)el.inert=false;});};
+ },[compact,menuOpen]);
+ const link=(href,label,icon,className='')=><a href={href} className={className} aria-current={href===route?'page':undefined}><Icon name={icon} className="nav-link-icon"/><span>{label}</span></a>;
+ const productLinks=indices=>indices.map(index=><a key={products[index][0]} href={products[index][0]} aria-current={products[index][0]===route?'page':undefined}>{products[index][1]}</a>);
+ return <header className={`header${scrolled?' scrolled':''}`} ref={header}><a href="index.html" className="brand" aria-label="AEMS Infra home"><img src="assets/img/AEMS_logo.png" alt="AEMS — Cleanliness Engineered" width="260" height="128"/></a><button className="mobile-toggle" onClick={onToggle} aria-expanded={menuOpen} aria-controls="navigation" aria-label={menuOpen?'Close navigation':'Open navigation'}><Icon name={menuOpen?'close':'menu'} size={24}/></button><nav id="navigation" className={menuOpen?'open':''} aria-label="Main navigation">
+ {link('index.html','Home','home','nav-home')}{link('about.html','About us','building')}
+ <details className="nav-drop" name="main-menu"><summary aria-current={services.some(s=>s[0]===route)?'page':undefined}><Icon name="layers" className="nav-link-icon"/><span>Solutions</span><Icon name="chevronDown" className="nav-chevron" size={18}/></summary><div className="dropdown"><a href="service.html" className="dropdown-overview">All engineering services <Icon name="arrowRight" size={18}/></a>{services.slice(0,5).map(s=><a key={s[0]} href={s[0]}>{s[1]}</a>)}</div></details>
+ <details className="nav-drop product-menu" name="main-menu"><summary aria-current={products.some(p=>p[0]===route)?'page':undefined}><Icon name="cube" className="nav-link-icon"/><span>Products</span><Icon name="chevronDown" className="nav-chevron" size={18}/></summary><div className="dropdown product-dropdown"><a className="all-products" href="products.html"><Icon name="search" size={18}/><span>Browse all products</span><Icon name="arrowRight" size={18}/></a><div className="product-nav-groups">{groups.map(([label,indices])=>compact?<details className="product-nav-group" name="product-categories" key={label}><summary><span>{label}</span><Icon name="chevronDown" size={18}/></summary><div>{productLinks(indices)}</div></details>:<div className="product-nav-group" key={label}><h3>{label}</h3>{productLinks(indices)}</div>)}</div></div></details>
+ {link('clients.html','Our clients','users')}{link('affiliations.html','Affiliations','award')}<a className="nav-cta" href="contact.html" aria-current={route==='contact.html'?'page':undefined}><Icon name="message"/><span>Contact us</span><Icon name="arrowRight" size={18}/></a></nav></header>;
+}
