@@ -10,7 +10,7 @@ export function initMotion(){
     gsap.registerPlugin(ScrollTrigger);
     const media=gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)',()=>{
-      const intro=document.querySelector('.hero-copy,.page-hero .wrap');
+      const intro=document.querySelector('.cinema-content,.hero-copy,.page-hero .wrap');
       if(intro){gsap.from(intro.children,{y:24,opacity:0,duration:1,stagger:.1,ease:'power3.out',clearProps:'transform,opacity'});}
       const stage=document.querySelector('.hero .scene-shell,.equipment-showcase,.service-experience');
       if(stage)gsap.from(stage,{y:25,opacity:0,duration:1.25,delay:.2,ease:'power3.out',clearProps:'transform,opacity'});
@@ -20,6 +20,7 @@ export function initMotion(){
       ScrollTrigger.batch('.service-card,.product-card',{start:'top 95%',once:true,onEnter:batch=>gsap.from(batch,{y:30,opacity:.25,stagger:.07,duration:.8,ease:'power3.out',clearProps:'transform,opacity'})});
       gsap.utils.toArray('.process-step').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>el.classList.add('step-reached')}));
       media.add('(min-width: 901px) and (pointer: fine)',()=>{
+        const cinema=document.querySelector('.cinema-image');if(cinema)gsap.to(cinema,{scale:1.06,ease:'none',scrollTrigger:{trigger:'.cinema-hero',start:'top top',end:'bottom top',scrub:1}});
         document.querySelectorAll('.about-image img').forEach(img=>gsap.to(img,{yPercent:5,scale:1.06,ease:'none',scrollTrigger:{trigger:img.parentElement,start:'top bottom',end:'bottom top',scrub:1}}));
       });
       const refresh=()=>ScrollTrigger.refresh();

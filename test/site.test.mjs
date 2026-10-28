@@ -132,6 +132,38 @@ test('Unknown URLs render a useful 404',async()=>{
   const dom=await render('/unknown-page');try{assert.match(dom.window.document.querySelector('main').textContent,/This page could not be found/);}finally{dom.window.close();}
 });
 
+test('Customer homepage solution tabs, keyboard navigation and 3D equipment selection work',async()=>{
+  const dom=await render('/');const d=dom.window.document;
+  try{
+    assert.ok(d.querySelector('.cinema-hero .cinema-image'));
+    assert.equal(d.querySelector('#solution-tab-0').getAttribute('aria-selected'),'true');
+    d.querySelector('#solution-tab-1').click();
+    assert.match(d.querySelector('#solution-panel').textContent,/HVAC/);
+    assert.equal(d.querySelector('#solution-panel').getAttribute('aria-labelledby'),'solution-tab-1');
+    d.querySelector('#solution-tab-1').dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+    assert.equal(d.querySelector('#solution-tab-2').getAttribute('aria-selected'),'true');
+    assert.match(d.querySelector('#solution-panel').textContent,/MEP/);
+    d.querySelector('[data-discovery="8"]').click();
+    assert.equal(d.querySelector('#discovery-title').textContent,'Air shower');
+    assert.equal(new URL(d.querySelector('#discovery-link').href).pathname,'/airshower.html');
+    d.querySelector('[data-discovery="6"]').click();
+    assert.equal(d.querySelector('#discovery-title').textContent,'Static pass box');
+    assert.ok(d.querySelectorAll('.faq-list details').length>=4);
+    assert.ok(d.querySelector('.contact-rail a[href="tel:+919000230419"]'));
+  }finally{dom.window.close();}
+});
+
+test('Original product images open in the accessible full-size viewer',async()=>{
+  const dom=await render('/dynamicpassbox/');const d=dom.window.document;
+  try{
+    const dialog=d.querySelector('.image-dialog');dialog.showModal=()=>dialog.setAttribute('open','');dialog.close=()=>dialog.removeAttribute('open');
+    const zoom=d.querySelector('.gallery-zoom');const src=zoom.querySelector('img').src;
+    zoom.click();assert.ok(dialog.hasAttribute('open'));assert.equal(dialog.querySelector('img').src,src);
+    assert.ok(dialog.getAttribute('aria-label'));
+    dialog.querySelector('.image-dialog-close').click();assert.ok(!dialog.hasAttribute('open'));
+  }finally{dom.window.close();}
+});
+
 test('HTTP requests succeed for every page variant, aliases and required assets',async()=>{
   const server=await createAemsServer(root);await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const origin=`http://127.0.0.1:${server.address().port}`;

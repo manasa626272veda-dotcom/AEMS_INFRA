@@ -1,5 +1,6 @@
 import * as THREE from './assets/three.module.js';
 import {RoomEnvironment} from './assets/RoomEnvironment.js';
+import {RoundedBoxGeometry} from './assets/RoundedBoxGeometry.js';
 
 export function createFacility(container) {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -14,13 +15,14 @@ export function createFacility(container) {
   const environment=new RoomEnvironment();const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(environment,.04).texture;environment.dispose();pmrem.dispose();
   const camera=new THREE.PerspectiveCamera(34,1,.1,100);
   const focus=new THREE.Vector3(0,1.7,0);
-  scene.add(new THREE.HemisphereLight(0xeaffdf,0x073b36,1.5));
-  const sun=new THREE.DirectionalLight(0xfaffeb,3);sun.position.set(-3,10,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-9;sun.shadow.camera.right=9;sun.shadow.camera.top=8;sun.shadow.camera.bottom=-8;sun.shadow.normalBias=.025;scene.add(sun);
-  const rim=new THREE.DirectionalLight(0x6abfb4,2);rim.position.set(8,5,-6);scene.add(rim);
+  scene.add(new THREE.HemisphereLight(0xf5faff,0x627789,1.7));
+  const sun=new THREE.DirectionalLight(0xffffff,3.3);sun.position.set(-3,10,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-9;sun.shadow.camera.right=9;sun.shadow.camera.top=8;sun.shadow.camera.bottom=-8;sun.shadow.normalBias=.018;sun.shadow.radius=3;scene.add(sun);
+  const rim=new THREE.DirectionalLight(0x9ed7f0,1.5);rim.position.set(8,5,-6);scene.add(rim);
   const root=new THREE.Group();scene.add(root);
   const mat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.4,metalness:.15,envMapIntensity:.7,...extra});
-  const white=mat(0xe3efdc), teal=mat(0x248e80,{metalness:.35,roughness:.32}),dark=mat(0x1a403a),silver=mat(0xbcd1bd,{metalness:.8,roughness:.28}),floor=mat(0xb4cbb4),glass=new THREE.MeshPhysicalMaterial({color:0x93d1ba,transparent:true,opacity:.18,metalness:.1,roughness:.08,clearcoat:1,depthWrite:false}),light=mat(0xd3ffc0,{emissive:0xa9ef94,emissiveIntensity:1.2});
-  function box(w,h,d,x,y,z,m=white,parent=root){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}
+  const white=mat(0xf0f3f5,{roughness:.32}), teal=mat(0x12667d,{metalness:.45,roughness:.29}),dark=mat(0x16364c),silver=mat(0xc4ced7,{metalness:.92,roughness:.24}),floor=mat(0xd2dfe7,{roughness:.23}),glass=new THREE.MeshPhysicalMaterial({color:0xb4d4e7,transparent:true,opacity:.13,metalness:.1,roughness:.035,clearcoat:1,depthWrite:false}),light=mat(0xd6f3ff,{emissive:0x8cd9ee,emissiveIntensity:.65});
+  const geometries=new Map();
+  function box(w,h,d,x,y,z,m=white,parent=root){const key=`${w},${h},${d}`;if(!geometries.has(key))geometries.set(key,Math.min(w,h,d)>.06?new RoundedBoxGeometry(w,h,d,2,Math.min(w,h,d,.3)*.08):new THREE.BoxGeometry(w,h,d));const mesh=new THREE.Mesh(geometries.get(key),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}
   function tube(points,r=.07,m=silver,parent=root){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,40,r,8,false),m);mesh.castShadow=true;parent.add(mesh);return curve;}
   box(8.6,.23,6.3,0,-.18,0,dark);
   box(8.45,.17,6.15,0,.02,0,floor);

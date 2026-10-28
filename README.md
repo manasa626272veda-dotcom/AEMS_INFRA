@@ -1,5 +1,15 @@
 # AEMS Infra 3D redesign
 
+## Customer showroom edition — Compress India reference
+
+The current edition uses Compress India as a reference for image-led HVAC presentation, then builds the experience around AEMS's own services, equipment and content. It adds a cinematic architectural hero, large switchable service panels, a four-product equipment explorer, a facility cutaway studio, a two-column desktop/one-column mobile product gallery, original-image lightboxes, customer FAQs and persistent call/enquiry actions. On desktop, product imagery is approximately 420px tall, equipment stages reach 610–650px, and the hero fills a large viewport panel.
+
+The live AHU model includes a steel frame, blower assembly, filter bank, copper coil detail and hardware. Air showers and pass boxes use glazed open shells. Materials use environment lighting, brushed-metal roughness, softer shadows and realistic neutral finishes. Models can rotate, zoom, pause, reset and switch to original photography. Equipment models are disposed when switching to prevent accumulating GPU resources.
+
+Two new built-in-generated concept images are saved under `dist/assets/premium`. Exact prompts and asset paths are documented in `VISUAL_ASSETS.md`. Original AEMS images, company content, routes and technical specifications remain available.
+
+The current functional suite has 11 passing tests, covering 78 page renderings, 4,428 internal link instances, 117 HTTP URLs, solution tabs and keyboard navigation, equipment switching, original-image lightboxes, filters, forms and mobile menus. Visual browser/GPU verification remains a separate limitation.
+
 ## Material 3 edition
 
 The upgraded edition uses Material 3 color roles, tonal surface containers, shape tokens, pill buttons, filter chips, state layers, ripples, and responsive typography. The homepage features a larger lit 3D clean room with interactive system hotspots, airflow and exploded modes. Every equipment page includes a category-specific conceptual 3D model with drag and keyboard rotation, pause/reset controls, and an original-product photo toggle. Models are illustrative; original specifications remain available below each viewer.
