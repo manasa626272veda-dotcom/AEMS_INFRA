@@ -26,7 +26,7 @@ async function render(urlPath){
   for(const [name,value] of Object.entries(globals))Object.defineProperty(globalThis,name,{value,writable:true,configurable:true});
   const originalError=console.error;
   console.error=(...args)=>{if(!String(args[0]).includes('THREE.WebGLRenderer'))originalError(...args);};
-  try{await import(`../dist/app.js?test=${++run}`);}finally{console.error=originalError;}
+  try{const app=await import(`../dist/app.js?test=${++run}`);const originalClose=win.close.bind(win);win.close=()=>{app.root.unmount();originalClose();};const nativeDispatch=win.EventTarget.prototype.dispatchEvent;win.EventTarget.prototype.dispatchEvent=function(event){let result;app.flushSync(()=>{result=nativeDispatch.call(this,event);});return result;};const nativeClick=win.HTMLElement.prototype.click;win.HTMLElement.prototype.click=function(){app.flushSync(()=>nativeClick.call(this));};}finally{console.error=originalError;}
   return dom;
 }
 
@@ -73,6 +73,7 @@ test('Every page actually renders its content, with working internal links, frag
         for(const table of document.querySelectorAll('.technical table'))assert.ok(table.parentElement.classList.contains('table-scroll'));
         if(content[name]&&document.querySelector('.technical')){
           assert.equal(document.querySelectorAll('.technical table').length,(content[name].content.match(/<table>/g)||[]).length);
+          const originalText=JSDOM.fragment(content[name].content).textContent.replace(/\s+/g,'');assert.ok(document.querySelector('.technical').textContent.replace(/\s+/g,'').includes(originalText),`${pathname}: original technical content changed`);
         }
       }finally{dom.window.close();}
     }
@@ -88,9 +89,9 @@ test('Catalogue filtering, search and empty state work',async()=>{
     assert.equal(document.querySelectorAll('#catalogue .product-card').length,2);
     assert.equal(document.querySelector('[data-filter="HVAC systems"]').getAttribute('aria-pressed'),'true');
     document.querySelector('[data-filter="All products"]').click();
-    const input=document.querySelector('input[type=search]');input.value='pass';input.dispatchEvent(new dom.window.Event('input'));
+    const input=document.querySelector('input[type=search]');Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set.call(input,'pass');input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));
     assert.equal(document.querySelectorAll('#catalogue .product-card').length,2);
-    input.value='no-such-equipment';input.dispatchEvent(new dom.window.Event('input'));
+    Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set.call(input,'no-such-equipment');input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));
     assert.ok(document.querySelector('.empty'));assert.match(document.querySelector('.results-count').textContent,/0 of 14/);
   }finally{dom.window.close();}
 });
@@ -171,7 +172,7 @@ test('HTTP requests succeed for every page variant, aliases and required assets'
     const requests=pages.flatMap(name=>name==='index.html'?['/','/index.html']:[`/${name}`,pagePath(name),pagePath(name)+'/']);
     for(const slug of Object.keys(aliases))requests.push('/'+slug,'/'+slug+'/');
     for(const url of requests){const response=await fetchNative(origin+url);assert.equal(response.status,200,url);assert.match(await response.text(),/<base href="\/">/);}
-    for(const asset of ['/app.js','/routes.js','/motion.js','/content.json','/experience.css','/assets/gsap.min.js','/assets/ScrollTrigger.min.js'])assert.equal((await fetchNative(origin+asset)).status,200,asset);
+    for(const asset of ['/app.js','/routes.js','/content.json','/experience.css','/photo-bounds.json','/assets/gsap.min.js','/assets/ScrollTrigger.min.js'])assert.equal((await fetchNative(origin+asset)).status,200,asset);
     assert.equal((await fetchNative(origin+'/not-a-page')).status,404);
     assert.equal((await fetchNative(origin+'/assets/missing.js')).status,404);
     console.log(`Verified ${requests.length} HTTP page URLs plus runtime assets and 404 responses.`);

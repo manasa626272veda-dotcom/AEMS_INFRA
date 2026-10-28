@@ -1,8 +1,8 @@
 import {animateSwap} from './motion.js';
 import {mountProductPhoto,openProductPhoto} from './product-photo.js';
-import * as THREE from './assets/three.module.js';
-import {RoomEnvironment} from './assets/RoomEnvironment.js';
-import {RoundedBoxGeometry} from './assets/RoundedBoxGeometry.js';
+import * as THREE from '/assets/three.module.js';
+import {RoomEnvironment} from '/assets/RoomEnvironment.js';
+import {RoundedBoxGeometry} from '/assets/RoundedBoxGeometry.js';
 
 // Concept models communicate the equipment type; supplied photos and technical
 // specifications remain the source for actual construction and dimensions.

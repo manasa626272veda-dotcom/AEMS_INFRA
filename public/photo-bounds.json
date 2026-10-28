@@ -1,0 +1,402 @@
+{
+  "assets/img/about-us-img.png": {
+    "width": 500,
+    "height": 500,
+    "bounds": [
+      0,
+      0,
+      500,
+      500
+    ]
+  },
+  "assets/img/aems1.png": {
+    "width": 248,
+    "height": 337,
+    "bounds": [
+      0,
+      0,
+      248,
+      337
+    ]
+  },
+  "assets/img/aems2.png": {
+    "width": 245,
+    "height": 235,
+    "bounds": [
+      0,
+      0,
+      245,
+      235
+    ]
+  },
+  "assets/img/aems3.png": {
+    "width": 245,
+    "height": 235,
+    "bounds": [
+      0,
+      0,
+      245,
+      235
+    ]
+  },
+  "assets/img/air-h-u.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      208,
+      0,
+      663,
+      269
+    ]
+  },
+  "assets/img/airshower.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      295,
+      0,
+      487,
+      269
+    ]
+  },
+  "assets/img/bio-safety-cabinet.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      302,
+      12,
+      471,
+      257
+    ]
+  },
+  "assets/img/cleanroomdoors.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      0,
+      0,
+      800,
+      269
+    ]
+  },
+  "assets/img/dynamicpassbox.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      308,
+      17,
+      491,
+      254
+    ]
+  },
+  "assets/img/facility.png": {
+    "width": 824,
+    "height": 394,
+    "bounds": [
+      0,
+      0,
+      824,
+      394
+    ]
+  },
+  "assets/img/facilityeng-home.png": {
+    "width": 500,
+    "height": 500,
+    "bounds": [
+      0,
+      0,
+      500,
+      500
+    ]
+  },
+  "assets/img/galvanised.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      0,
+      0,
+      800,
+      269
+    ]
+  },
+  "assets/img/home-ahu.png": {
+    "width": 270,
+    "height": 191,
+    "bounds": [
+      22,
+      22,
+      262,
+      172
+    ]
+  },
+  "assets/img/home-airshower.png": {
+    "width": 270,
+    "height": 191,
+    "bounds": [
+      73,
+      10,
+      200,
+      191
+    ]
+  },
+  "assets/img/home-crp.png": {
+    "width": 270,
+    "height": 191,
+    "bounds": [
+      0,
+      0,
+      270,
+      191
+    ]
+  },
+  "assets/img/home-passbox.png": {
+    "width": 270,
+    "height": 191,
+    "bounds": [
+      0,
+      0,
+      270,
+      191
+    ]
+  },
+  "assets/img/home-vision-mission.png": {
+    "width": 960,
+    "height": 520,
+    "bounds": [
+      0,
+      0,
+      960,
+      520
+    ]
+  },
+  "assets/img/horizontal-l-f.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      285,
+      13,
+      519,
+      262
+    ]
+  },
+  "assets/img/hvac-system.png": {
+    "width": 500,
+    "height": 500,
+    "bounds": [
+      0,
+      0,
+      500,
+      500
+    ]
+  },
+  "assets/img/lab-furniture.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      228,
+      4,
+      606,
+      262
+    ]
+  },
+  "assets/img/mep-home.png": {
+    "width": 500,
+    "height": 500,
+    "bounds": [
+      0,
+      0,
+      500,
+      500
+    ]
+  },
+  "assets/img/mep.png": {
+    "width": 2304,
+    "height": 1728,
+    "bounds": [
+      0,
+      0,
+      2304,
+      1728
+    ]
+  },
+  "assets/img/reverse-l-f.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      299,
+      6,
+      491,
+      258
+    ]
+  },
+  "assets/img/ssf1.png": {
+    "width": 227,
+    "height": 181,
+    "bounds": [
+      0,
+      0,
+      227,
+      181
+    ]
+  },
+  "assets/img/ssf10.png": {
+    "width": 228,
+    "height": 176,
+    "bounds": [
+      0,
+      0,
+      228,
+      176
+    ]
+  },
+  "assets/img/ssf11.png": {
+    "width": 229,
+    "height": 177,
+    "bounds": [
+      0,
+      0,
+      229,
+      177
+    ]
+  },
+  "assets/img/ssf12.png": {
+    "width": 230,
+    "height": 184,
+    "bounds": [
+      0,
+      0,
+      230,
+      184
+    ]
+  },
+  "assets/img/ssf13.png": {
+    "width": 230,
+    "height": 175,
+    "bounds": [
+      0,
+      0,
+      230,
+      175
+    ]
+  },
+  "assets/img/ssf14.png": {
+    "width": 231,
+    "height": 179,
+    "bounds": [
+      0,
+      0,
+      229,
+      179
+    ]
+  },
+  "assets/img/ssf2.png": {
+    "width": 227,
+    "height": 182,
+    "bounds": [
+      0,
+      0,
+      227,
+      182
+    ]
+  },
+  "assets/img/ssf3.png": {
+    "width": 229,
+    "height": 182,
+    "bounds": [
+      0,
+      0,
+      229,
+      182
+    ]
+  },
+  "assets/img/ssf4.png": {
+    "width": 230,
+    "height": 180,
+    "bounds": [
+      0,
+      0,
+      230,
+      180
+    ]
+  },
+  "assets/img/ssf5.png": {
+    "width": 229,
+    "height": 177,
+    "bounds": [
+      0,
+      0,
+      229,
+      177
+    ]
+  },
+  "assets/img/ssf6.png": {
+    "width": 228,
+    "height": 184,
+    "bounds": [
+      0,
+      0,
+      228,
+      184
+    ]
+  },
+  "assets/img/ssf7.png": {
+    "width": 229,
+    "height": 183,
+    "bounds": [
+      0,
+      0,
+      229,
+      183
+    ]
+  },
+  "assets/img/ssf8.png": {
+    "width": 229,
+    "height": 182,
+    "bounds": [
+      0,
+      0,
+      229,
+      182
+    ]
+  },
+  "assets/img/ssf9.png": {
+    "width": 228,
+    "height": 183,
+    "bounds": [
+      0,
+      0,
+      228,
+      183
+    ]
+  },
+  "assets/img/staticpassbox.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      281,
+      17,
+      519,
+      252
+    ]
+  },
+  "assets/img/validations.png": {
+    "width": 500,
+    "height": 500,
+    "bounds": [
+      0,
+      0,
+      500,
+      500
+    ]
+  },
+  "assets/img/vertical-l-f.png": {
+    "width": 800,
+    "height": 269,
+    "bounds": [
+      284,
+      16,
+      483,
+      254
+    ]
+  }
+}

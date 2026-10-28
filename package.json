@@ -1,0 +1,1 @@
+{"name":"aems-infra-react","version":"2.0.0","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","dev":"node serve.mjs","test":"node --test test/site.test.mjs","test:browser":"node test/browser-audit.mjs","test:motion":"node test/motion-browser.mjs"},"dependencies":{"react":"^19.3.1","react-dom":"^19.3.1"},"devDependencies":{"esbuild":"^0.28.2"}}

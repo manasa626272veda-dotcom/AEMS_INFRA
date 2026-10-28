@@ -1,6 +1,6 @@
-import * as THREE from './assets/three.module.js';
-import {RoomEnvironment} from './assets/RoomEnvironment.js';
-import {RoundedBoxGeometry} from './assets/RoundedBoxGeometry.js';
+import * as THREE from '/assets/three.module.js';
+import {RoomEnvironment} from '/assets/RoomEnvironment.js';
+import {RoundedBoxGeometry} from '/assets/RoundedBoxGeometry.js';
 
 export function createFacility(container) {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -95,16 +95,16 @@ export function createFacility(container) {
     if(action==='reset'){angle=.63;elevation=.49;changeMode('all');return;}
     changeMode(action);
   }));
-  let visible=true;new IntersectionObserver(entries=>visible=entries[0].isIntersecting).observe(container);
+  let visible=true;const visibilityObserver=new IntersectionObserver(entries=>visible=entries[0].isIntersecting);visibilityObserver.observe(container);
   let prev=performance.now();
-  function animate(now){requestAnimationFrame(animate);const delta=Math.max(0,Math.min((now-prev)/1000,.05));prev=now;if(!visible||document.hidden)return;if(!paused)t+=delta;
+  let frameId,disposed=false;function animate(now){if(disposed)return;frameId=requestAnimationFrame(animate);const delta=Math.max(0,Math.min((now-prev)/1000,.05));prev=now;if(!visible||document.hidden)return;if(!paused)t+=delta;
     if(!dragging&&!paused)angle+=Math.sin(t*.25)*.00014;
     ahu.position.y=THREE.MathUtils.lerp(ahu.position.y,roofTarget,.06);vents.position.y=THREE.MathUtils.lerp(vents.position.y,roofTarget*.55,.06);
     fan.rotation.z=paused?fan.rotation.z:t*2.5;
     streamMaterial.uniforms.uTime.value=t;streams.forEach(mesh=>mesh.visible=mode!=='exploded');
     dots.forEach(({mesh,path,offset})=>{mesh.visible=mode!=='exploded';mesh.position.copy(path.getPoint((t*.17+offset)%1));});
     updateCamera();renderer.render(scene,camera);
-  }requestAnimationFrame(animate);
+  }frameId=requestAnimationFrame(animate);
   container.setAttribute('aria-label','Interactive 3D conceptual clean room facility. Drag with a mouse to rotate. Use the controls to explore airflow and equipment layers.');
-  return {setMode:changeMode};
+  return {setMode:changeMode,destroy(){disposed=true;cancelAnimationFrame(frameId);observer.disconnect();visibilityObserver.disconnect();const materials=new Set();scene.traverse(object=>{object.geometry?.dispose();if(object.material)materials.add(object.material);});materials.forEach(m=>m.dispose());scene.environment?.dispose();renderer.dispose();renderer.domElement.remove();}};
 }

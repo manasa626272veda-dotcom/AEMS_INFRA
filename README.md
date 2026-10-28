@@ -1,67 +1,49 @@
-# AEMS Infra 3D redesign
+# AEMS Infra — React website
 
-## Customer showroom edition — Compress India reference
+The approved AEMS redesign is implemented in React 19 with reusable components, local Three.js viewers and GSAP motion. The original logo, product photos, copy, specification tables, clean URLs, `.html` URLs and trailing-slash routes are retained.
 
-The current edition uses Compress India as a reference for image-led HVAC presentation, then builds the experience around AEMS's own services, equipment and content. It adds a cinematic architectural hero, large switchable service panels, a four-product equipment explorer, a facility cutaway studio, a two-column desktop/one-column mobile product gallery, original-image lightboxes, customer FAQs and persistent call/enquiry actions. On desktop, product imagery is approximately 420px tall, equipment stages reach 610–650px, and the hero fills a large viewport panel.
+## Run locally
 
-The live AHU model includes a steel frame, blower assembly, filter bank, copper coil detail and hardware. Air showers and pass boxes use glazed open shells. Materials use environment lighting, brushed-metal roughness, softer shadows and realistic neutral finishes. Models can rotate, zoom, pause, reset and switch to original photography. Equipment models are disposed when switching to prevent accumulating GPU resources.
+Install Node.js (validated with Node 24), then run:
 
-Two new built-in-generated concept images are saved under `dist/assets/premium`. Exact prompts and asset paths are documented in `VISUAL_ASSETS.md`. Original AEMS images, company content, routes and technical specifications remain available.
+```powershell
+npm ci
+npm run build
+npm run dev
+```
 
-The current functional suite has 11 passing tests, covering 78 page renderings, 4,428 internal link instances, 117 HTTP URLs, solution tabs and keyboard navigation, equipment switching, original-image lightboxes, filters, forms and mobile menus. Visual browser/GPU verification remains a separate limitation.
+Open `http://127.0.0.1:4173`. After changing source files, run `npm run build` and refresh. The built output is `dist/`; edit the source rather than the compiled bundle.
 
-## Material 3 edition
+## Project structure
 
-The upgraded edition uses Material 3 color roles, tonal surface containers, shape tokens, pill buttons, filter chips, state layers, ripples, and responsive typography. The homepage features a larger lit 3D clean room with interactive system hotspots, airflow and exploded modes. Every equipment page includes a category-specific conceptual 3D model with drag and keyboard rotation, pause/reset controls, and an original-product photo toggle. Models are illustrative; original specifications remain available below each viewer.
+- `src/main.jsx`: React root, navigation state, image dialog and shared page behavior.
+- `src/components.jsx`: catalogue/search, enquiry form, product cards, photo components, solution tabs, equipment selectors and 3D lifecycle bridges.
+- `src/pages.jsx`: the 26 approved page compositions as JSX, preserving original technical content.
+- `src/layout.jsx`: shared original-logo header and footer.
+- `src/data.json`: product/service data and original page image metadata.
+- `src/lib/`: Three.js models, photo fitting, routing and motion. Viewers and observers are disposed on unmount.
+- `public/`: local styles, fonts, original assets and archived source data.
+- `scripts/build.mjs`: esbuild production bundle and static route generation. Build and hosting require no Python or application server.
+- `research/original`: snapshots of the original website. Research extraction scripts are retained for provenance; they do not overwrite React compositions during a build.
 
-Complete static website redesign based on https://aemsinfra.com/.
+React manages the interactive state. Three.js owns only the contents of dedicated viewer hosts. Original images with embedded white margins are fitted around the complete photographed equipment without changing their bytes. Models and generated concept images remain labelled illustrations.
 
-## Preview
+## Tests
 
-Run `node serve.mjs`, then open http://127.0.0.1:4173.
+```powershell
+npm --prefix qa install --no-audit --no-fund jsdom playwright @axe-core/playwright
+node qa/node_modules/playwright/cli.js install chromium
+npm test
+npm run test:browser
+npm run test:motion
+```
 
-## Route reliability and reference pass
+`npm test` mounts the production React bundle and covers 78 page renderings, 4,428 internal links, 117 HTTP URLs, catalogue filtering/search, navigation, enquiry preparation, photo controls and WebGL fallback. Browser tests use an isolated localhost Chromium context. See `VALIDATION.md` for results and limits.
 
-All original pages work with `.html`, extensionless, and trailing-slash URLs. This fixes hosting clean-URL normalization such as `/hvacservices.html` becoming `/hvacservices`. A shared route resolver and generated directory entries keep both browser rendering and static hosting consistent. Root-relative assets and explicitly scoped fragment links support direct links and refreshes. All 14 products and Affiliations are available from the main navigation.
+`python validate.py` is an optional source/asset audit. `analyze_photos.py` uses Pillow to regenerate image-margin metadata if original photos change; copy its JSON output into `public/photo-bounds.json` before rebuilding.
 
-The reference pass uses GSAP 3.14.2 with ScrollTrigger for progressive entrance and scroll motion. Taste Skill informed the audit, hierarchy and content preservation; 21st and ThreeUI informed spotlight, spatial product interaction and shader concepts. Components and models are authored for AEMS; no paid component sources are included. The original 65 images and technical specification content remain local. Six service views now include the interactive facility, and airflow has a procedural shader layer.
+## Hosting and behavior
 
-References: https://www.tasteskill.dev/, https://gsap.com/, https://21st.dev/, https://threeui.com/.
+The existing private Sites identity remains in `.openai/hosting.json`. Publish the built `dist/` output through the supported Sites workflow. This separately hosted redesign does not change the original `aemsinfra.com` domain.
 
-## Validation
-
-Run `python prepare.py` and `python validate.py`. For the functional suite, first run `npm --prefix qa install --no-audit --no-fund jsdom`, then `node --test test/site.test.mjs`.
-
-The suite covers 78 DOM page renderings (26 pages in three URL forms), 4,428 internal link instances, all referenced image and fragment targets, 117 HTTP page URLs, aliases, proper 404s, catalogue filters/search, mobile navigation and Escape, product enquiry selection, contact validation and email preparation, and graceful WebGL fallback. The DOM suite uses an isolated environment. Separate Chromium layout, contrast and live WebGL interaction checks are documented below.
-
-## Site coverage
-
-All 25 linked original HTML routes are retained. The new product catalogue adds `products.html`, with 14 searchable products in five categories. Includes About, Services, five service detail pages, 14 product detail pages, Clients, Affiliations and Contact.
-
-Original page snapshots are in `research/original`. `content.json` contains the original body text and specification tables, excluding repeated navigation and footers. Original imagery is stored locally under `dist/assets/img` (65 images). `extract.py` regenerates that content from the snapshots. `prepare.py` regenerates the static route shells.
-
-## Interaction
-
-- Locally bundled Three.js facility with mouse rotation, airflow, exploded equipment, reset and pause controls.
-- Responsive navigation, searchable product catalogue and category filters.
-- Product-specific enquiry links, phone/email links, map link, printable technical pages.
-- The enquiry form validates inputs and prepares an email link with the project details; visitors must review and send it in their own email app. There is no form submission service, inbox database or automatic email sending.
-- Reduced-motion preferences are respected. WebGL failure uses an original clean room image as fallback.
-
-## Content notes
-
-The 3D facility is a conceptual illustration, not an exact digital twin of a client facility. Technical wording and dimensions from the original website have been retained; any original typographical errors need client engineering review. The source header phone number (040-48586464) is used; the original footer had a different visual spacing. Client and affiliation logos are preserved without inventing names or new endorsements. Existing third-party placeholders for social links were omitted.
-
-The website runs without a build step or npm dependencies. Google Sans Flex fonts are hosted locally with system-font fallback. All essential JS and images are hosted locally.
-
-This is a separately hosted redesign; the original aemsinfra.com deployment and domain have not been modified.
-
-## Responsive image and readability refinement
-
-The unchanged original AEMS logo is used in the navy header and footer. `analyze_photos.py` measures empty white margins in the original photos and writes `dist/photo-bounds.json`; `product-photo.js` fits the complete photographed object into the available viewport without changing source image bytes. The product viewer is full width, with zoom, reset and full-size photo controls, including when WebGL is unavailable. Original low-resolution images retain their source resolution.
-
-Browser QA dependencies: `npm --prefix qa install --no-audit --no-fund jsdom playwright @axe-core/playwright`, then `node qa/node_modules/playwright/cli.js install chromium`. Run `node test/browser-audit.mjs` for isolated localhost layout and contrast checks. This exercises the photo fallback at six viewport sizes and writes reports/screenshots to ignored `outputs/ui-audit`.
-
-Run `node test/browser-controls.mjs` to check live WebGL/photo switching, zoom/reset, modal Escape and mobile navigation in isolated Chromium at 390px and 1440px.
-
-Motion QA: `node test/motion-browser.mjs` checks normal/reduced motion, live preference changes, solution and photo transitions, accordion/modal behavior, readable text and horizontal overflow at phone and desktop widths. Motion uses the existing local GSAP bundle and the browser animation API.
+The enquiry form validates information and prepares an email link. Visitors review and send it in their own email app; there is no automatic submission service. 3D models are conceptual illustrations, and the retained technical specifications remain the source of engineering detail. Reduced-motion preferences are supported. Original low-resolution photos retain their source resolution.

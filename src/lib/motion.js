@@ -1,24 +1,29 @@
 // Motion is progressive enhancement: text never starts transparent or hidden.
+let preference;
+const motionPreference=()=>preference??=matchMedia('(prefers-reduced-motion: reduce)');
 const swaps=new WeakMap();
 const activeSwaps=new Set();
 export function animateSwap(element,{media=false}={}){
-  if(!element||matchMedia('(prefers-reduced-motion: reduce)').matches||typeof element.animate!=='function')return;
+  if(!element||motionPreference().matches||typeof element.animate!=='function')return;
   swaps.get(element)?.cancel();
   const animation=element.animate(media?[{transform:'scale(.985)'},{transform:'scale(1)'}]:[{transform:'translateY(9px)'},{transform:'translateY(0)'}],{duration:media?360:300,easing:'cubic-bezier(.2,.7,.2,1)'});
   swaps.set(element,animation);activeSwaps.add(animation);
-  animation.finished.then(()=>activeSwaps.delete(animation),()=>activeSwaps.delete(animation));
+  const cancelOnReduce=event=>{if(event.matches)animation.cancel();};motionPreference().addEventListener('change',cancelOnReduce);
+  const release=()=>{activeSwaps.delete(animation);motionPreference().removeEventListener('change',cancelOnReduce);};
+  animation.finished.then(release,release);
 }
 
 export function initMotion(){
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const controller=new window.AbortController();let motionContext;
+  const reduced=motionPreference();
   const progress=document.createElement('div');progress.className='reading-progress';progress.setAttribute('aria-hidden','true');document.body.append(progress);
   const updateProgress=()=>{const total=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${total>0?Math.min(1,scrollY/total):0})`;};
-  addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);updateProgress();
+  addEventListener('scroll',updateProgress,{passive:true,signal:controller.signal});addEventListener('resize',updateProgress,{signal:controller.signal});updateProgress();
   reduced.addEventListener('change',()=>{if(reduced.matches){activeSwaps.forEach(a=>a.cancel());activeSwaps.clear();}});
   const launch=()=>{
     const {gsap,ScrollTrigger}=window;if(!gsap||!ScrollTrigger)return;
     gsap.registerPlugin(ScrollTrigger);
-    const media=gsap.matchMedia();
+    const media=gsap.matchMedia();motionContext=media;
     media.add('(prefers-reduced-motion: no-preference)',()=>{
       const distance=innerWidth<768?12:20;
       const intro=document.querySelector('.cinema-content,.hero-copy,.page-hero .wrap');
@@ -34,5 +39,6 @@ export function initMotion(){
       document.querySelectorAll('img').forEach(img=>{if(!img.complete)img.addEventListener('load',refresh,{once:true});});
     });
   };
-  if(document.readyState==='complete')launch();else addEventListener('load',launch,{once:true});
+  if(document.readyState==='complete')launch();else addEventListener('load',launch,{once:true,signal:controller.signal});
+  return ()=>{controller.abort();motionContext?.revert();progress.remove();activeSwaps.forEach(a=>a.cancel());activeSwaps.clear();};
 }

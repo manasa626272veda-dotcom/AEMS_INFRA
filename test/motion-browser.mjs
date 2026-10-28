@@ -15,7 +15,7 @@ try{
   const swapping=await page.locator('#solution-panel').evaluate(e=>e.getAnimations().length);
   assert.equal(swapping>0,preference==='no-preference','Solution swap respects motion preference');
   if(preference==='no-preference'){
-   await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(30);
+   await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.querySelector('#solution-panel').getAnimations().length===0,{},{timeout:1000});
    assert.equal(await page.locator('#solution-panel').evaluate(e=>e.getAnimations().length),0);
    await page.emulateMedia({reducedMotion:'no-preference'});
   }

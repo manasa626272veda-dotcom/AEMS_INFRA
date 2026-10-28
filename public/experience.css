@@ -1,0 +1,51 @@
+/* Editorial hierarchy and focused interaction informed by Taste Skill, 21st
+   and ThreeUI. Bespoke components; GSAP drives the motion layer. */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:route-out .16s ease both}
+::view-transition-new(root){animation:route-in .3s ease both}
+@keyframes route-out{to{opacity:0;transform:translateY(-4px)}}
+@keyframes route-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:#168b72;transform-origin:left;z-index:100;pointer-events:none}
+.header nav{gap:0}.header nav>a:not(.nav-cta),.nav-drop summary{padding-inline:12px}
+.brand img{background:#16473d;padding:6px 10px;border-radius:12px;width:144px;height:44px;object-position:center}
+summary[aria-current=page]{background:#e0ebe0;color:#163f31}
+.product-dropdown{display:none;grid-template-columns:1fr 1fr;gap:8px;width:560px;left:auto;right:-175px;padding:20px}
+.product-menu[open] .product-dropdown{display:grid}
+.product-dropdown h3{font-size:12px;letter-spacing:.02em;font-weight:600;padding:12px 14px 7px;color:#477154;font-family:inherit}
+.product-dropdown a{font-size:12px;padding:8px 14px;line-height:1.5}
+.product-dropdown .all-products{grid-column:1/-1;background:#d9e8d0;border-radius:30px;margin-top:8px;padding:12px 17px;display:flex;justify-content:space-between;color:#345b34}
+.product-dropdown .all-products>span{font-size:18px}
+.service-card,.product-card,.contact-form{isolation:isolate}
+.service-card:after,.product-card:after,.contact-form:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--spot-x,50%) var(--spot-y,50%),#bde6af38,transparent 80%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:1}
+.service-card:hover:after,.product-card:hover:after,.contact-form:hover:after{opacity:1}
+.product-card,.contact-form{position:relative}
+.process-step{transition:opacity .5s,border-color .5s}
+.process-step.step-reached .process-top>span{background:#c9e9af;color:#173f26;border-color:#c9e9af}
+.service-experience{padding-top:30px}
+.service-world{border-radius:32px;background:radial-gradient(ellipse at 25% 45%,#195850,#0b3535 75%);overflow:hidden;display:grid;grid-template-columns:1.3fr 1fr;min-height:450px;position:relative;color:#edf7e4}
+.service-world .scene-shell{width:100%;height:450px;margin:0;align-self:center;touch-action:pan-y}
+.service-world .scene-toolbar{bottom:35px;gap:3px;white-space:nowrap}
+.service-world .scene-toolbar button{padding:9px 15px;font-size:11px}
+.service-world .scene-status{bottom:15px;right:15px}.service-world .motion-button{font-size:9px}
+.service-world .scene-canvas{outline-offset:-12px!important}
+.service-world-copy{padding:45px 40px;align-self:center;position:relative;z-index:3}
+.service-world-copy .eyebrow{color:#afd5b7;font-size:9px;margin-bottom:20px}
+.service-world-copy .eyebrow:before{background:#bce5aa}
+.service-world-copy h2{font-size:clamp(28px,2.7vw,42px);max-width:400px;margin-bottom:22px}
+.service-world-copy>p{font-size:13px;line-height:1.9;max-width:350px;color:#adc6b7}
+.service-world-copy .text-link{color:#ceecb4;margin-top:20px;font-size:12px}
+.service-world-copy small{display:block;margin-top:22px;font-size:10px;color:#729f8c;max-width:330px;line-height:1.7}
+.service-world .scene-shell:before{right:7%;top:7%}.service-world .scene-shell:after{right:0;top:-8%}
+.section-index{position:sticky;top:96px;z-index:10;padding:12px 6%;display:flex;align-items:center;gap:25px;background:#f8faf6ef;backdrop-filter:blur(15px);border-bottom:1px solid #dbe6d2;overflow:auto}
+.section-index a{font-size:11px;white-space:nowrap;color:#79936c;border-radius:30px;padding:7px 12px;transition:background .2s,color .2s}
+.section-index a:hover{background:#e5eedb;color:#395d2f}
+.section-index .index-label{font-size:9px;text-transform:uppercase;letter-spacing:1.3px;color:#92a487;white-space:nowrap}
+.equipment-tools button:disabled,.scene-toolbar button:disabled{opacity:.45;cursor:default}
+.empty .text-link{display:inline-flex;margin-top:16px}
+[hidden]{display:none!important}
+@media(min-width:1300px){.hero-grid{grid-template-columns:43% 57%}.hero .scene-shell{height:640px;width:116%;margin-left:-5%}}
+@media(max-width:1100px) and (min-width:801px){.header nav{font-size:11px}.header nav>a:not(.nav-cta),.nav-drop summary{padding-inline:9px}.nav-cta{gap:12px;font-size:10px;padding:12px 14px}.header .brand{width:145px}.service-world-copy{padding:35px}.service-world-copy>p{font-size:12px}.service-world .scene-shell{height:410px}.section-index{top:88px}}
+@media(max-width:800px){.header nav>a:not(.nav-cta),.nav-drop summary{padding:13px 17px}.product-dropdown{position:static;width:100%;padding:10px;margin-top:8px;gap:0}.product-dropdown h3{font-size:10px;padding:10px}.product-dropdown a{font-size:11px;padding:8px 10px}.service-world{grid-template-columns:1fr;min-height:0}.service-world .scene-shell{height:400px;grid-row:2}.service-world-copy{padding:30px 35px 0}.service-world-copy h2{font-size:35px;max-width:500px}.service-world-copy>p{max-width:560px}.service-world-copy small{max-width:450px;margin-top:14px}.service-world .scene-toolbar{bottom:24px}.service-world .scene-status{bottom:10px}.section-index{top:82px;padding:9px 5%;gap:12px}.section-index a{font-size:10px}.section-index .index-label{display:none}}
+@media(max-width:480px){.product-dropdown{grid-template-columns:1fr 1fr}.product-dropdown h3{font-size:9px;letter-spacing:0}.product-dropdown a{font-size:10px;line-height:1.5}.product-dropdown .all-products{font-size:10px;padding:12px}.service-world{border-radius:26px}.service-world-copy{padding:27px 25px 0}.service-world-copy h2{font-size:31px}.service-world-copy>p{font-size:12px}.service-world-copy .eyebrow{font-size:8px}.service-world-copy .text-link{font-size:11px}.service-world-copy small{font-size:9px}.service-world .scene-shell{height:320px}.service-world .scene-toolbar button{font-size:10px;padding:8px 12px}.service-world .scene-status .motion-button{font-size:7px}.section-index{top:76px;gap:6px;padding-inline:15px}.section-index a{padding-inline:9px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}.service-card:after,.product-card:after,.contact-form:after{display:none}}
+@media print{.reading-progress,.service-experience,.section-index{display:none}}

@@ -1,0 +1,385 @@
+{
+  "products": [
+    [
+      "cleanroompanels.html",
+      "Clean room panels",
+      "Clean rooms",
+      "home-crp.png",
+      "Modular panels with configurable finishes and infill materials."
+    ],
+    [
+      "galvanizedironCR.html",
+      "GI clean room partitions",
+      "Clean rooms",
+      "about-us-img.png",
+      "Galvanized iron partitions for controlled environments."
+    ],
+    [
+      "cleanroomdoors.html",
+      "Clean room doors",
+      "Clean rooms",
+      "crd.png",
+      "Doors designed for modular clean room applications."
+    ],
+    [
+      "horizontallaminarflow.html",
+      "Horizontal laminar flow",
+      "Airflow & containment",
+      "hlaf.png",
+      "Horizontal unidirectional airflow for product protection."
+    ],
+    [
+      "verticallaminarflow.html",
+      "Vertical laminar flow",
+      "Airflow & containment",
+      "vlaf.png",
+      "HEPA-filtered vertical airflow for critical processes."
+    ],
+    [
+      "reverselaminarflow.html",
+      "Reverse laminar flow",
+      "Airflow & containment",
+      "rlaf.png",
+      "Controlled containment for material handling."
+    ],
+    [
+      "staticpassbox.html",
+      "Static pass box",
+      "Transfer systems",
+      "home-passbox.png",
+      "Transfer materials between controlled environments."
+    ],
+    [
+      "dynamicpassbox.html",
+      "Dynamic pass box",
+      "Transfer systems",
+      "home-passbox.png",
+      "Filtered airflow for clean room material transfer."
+    ],
+    [
+      "airshower.html",
+      "Air shower",
+      "Transfer systems",
+      "home-airshower.png",
+      "Personnel decontamination before clean room entry."
+    ],
+    [
+      "biosafetycabinet.html",
+      "Biosafety cabinet",
+      "Airflow & containment",
+      "bsc.png",
+      "Cabinets for laboratory containment applications."
+    ],
+    [
+      "labfurniture.html",
+      "Laboratory furniture",
+      "Furniture",
+      "labfurniture.png",
+      "Practical furniture for laboratory workflows."
+    ],
+    [
+      "airhandlingunit.html",
+      "Air handling unit",
+      "HVAC systems",
+      "home-ahu.png",
+      "Air filtration and conditioning for your facility."
+    ],
+    [
+      "hvacsystems.html",
+      "HVAC systems",
+      "HVAC systems",
+      "hvac-system.png",
+      "Integrated heating, ventilation and air conditioning."
+    ],
+    [
+      "ssfurnitures.html",
+      "Stainless steel furniture",
+      "Furniture",
+      "ssfurnitures.png",
+      "Stainless steel equipment for clean room applications."
+    ]
+  ],
+  "services": [
+    [
+      "cleanroomequipment.html",
+      "Clean room solutions",
+      "Modular environments, engineered around the precision your process demands.",
+      "room"
+    ],
+    [
+      "hvacservices.html",
+      "HVAC & air systems",
+      "Complete environmental control, from system design to energy-efficient retrofits.",
+      "air"
+    ],
+    [
+      "mepcontractors.html",
+      "MEP contracting",
+      "Mechanical, electrical and plumbing systems. One integrated engineering partner.",
+      "mep"
+    ],
+    [
+      "validations.html",
+      "Testing & validation",
+      "Understand your environment with clean room testing and detailed documentation.",
+      "test"
+    ],
+    [
+      "facilityengservices.html",
+      "Facility maintenance",
+      "Keep critical equipment and utilities operating with dedicated engineering support.",
+      "facility"
+    ],
+    [
+      "service.html#retrofit",
+      "Energy-efficient retrofits",
+      "Reimagine existing HVAC systems with direct-drive and EC fan technology.",
+      "retro"
+    ]
+  ],
+  "pages": {
+    "about.html": {
+      "title": "About AEMS",
+      "description": "AEMS as the name suggests Alternative and Energy Management Solutions, and also in providing complete MEP solutions, especially in the field of Pharmaceutical, Healthcare, Biotechnology and Food Processing across the globe. \"Safety, Improvement, Morals\" are core values of the organization.",
+      "images": [
+        "assets/img/about-us-img.png"
+      ]
+    },
+    "affiliations.html": {
+      "title": "Affiliations",
+      "description": "AEMS provides turnkey solutions in clean room technology and customized environmental control systems for Pharmaceutical, infrastructure, healthcare facilities.",
+      "images": [
+        "assets/img/affiliations-1.png",
+        "assets/img/affiliations-2.png",
+        "assets/img/affiliations-3.png",
+        "assets/img/affiliations-4.png"
+      ]
+    },
+    "airhandlingunit.html": {
+      "title": "Air Handling Unit (AHU)",
+      "description": "Air Handling Unit (AHU) also known as Air handlers are used to supply and circulate air around a building, or to extract stale air as part of a building's Heating, Ventilating and Air Conditioning (HVAC) system",
+      "images": [
+        "assets/img/air-h-u.png"
+      ]
+    },
+    "airshower.html": {
+      "title": "Air Shower",
+      "description": "We supply best quality with high performance Air Shower, which is widely appreciated for its superior quality and performance. The Air Shower is basically used to supply class 100 HEPA filtered air at maximum velocity to remove impurities from the clean room. Based on their high efficiency and easy functioning",
+      "images": [
+        "assets/img/airshower.png"
+      ]
+    },
+    "biosafetycabinet.html": {
+      "title": "Bio Safety Cabin",
+      "description": "Bio-safety cabinets are designed to provide personnel, environmental and product protection. Air flow is drawn around the operator into the front grille of the cabinet which provides personnel protection. Additionally, the downward laminar flow of HEPA-filtered air provides product protection by minimizing the chance of cross-contamination along the work surface of the cabinet. Because cabinet air passes through the exhaust HEPA filter, it is contaminant-free (environmental protection). All Class II cabinets are designed for work involving microorganisms assigned to bio safety levels 1, 2 and 3. Class II cabinets provide the microbe-free work environment necessary for cell culture propagation, and also may be used for the formulation of non-volatile antineoplastic or hemotherapeutic drugs. Bio safety cabinets are available in powder coated Galvanized Steel, SS 304 / SS 316 or a combination of both.",
+      "images": [
+        "assets/img/bio-safety-cabinet.png"
+      ]
+    },
+    "cleanroomdoors.html": {
+      "title": "Clean Room Doors",
+      "description": "We are enlisted as one of the foremost Clean Room Doors Manufacturers and Suppliers based from Hyderabad in India. Made using galvanized steel & Stainless steel the Clean Room Doors offered by us are highly praised in the markets. These doors can be tailor made to suit the varied requirements of the esteemed clients. Available in different specifications, Clean Room Doors are widely acknowledged by the customers",
+      "images": [
+        "assets/img/cleanroomdoors.png"
+      ]
+    },
+    "cleanroomequipment.html": {
+      "title": "Clean Room Equipment Suppliers",
+      "description": "AEMS is pleased to introduce as one of the superior Clean Room Equipment Suppliers. We provide complete turnkey solutions for a greater clean room environment. We have a hand full of experience and complete knowledge about the designing, manufacturing and supply of clean room equipment for various industries such as pharmaceuticals, hospitals, research and development laboratories, food and processing and more. We follow the latest guidelines to meet the standards of WHO. The benefit to consumers as one stop for all the equipment of a clean room is accessible at AEMS. This is very helpful to finish of projects short period. Our clean room equipment controls the pollutants and always makes the room have secure and sterilized environment.",
+      "images": [
+        "assets/img/about-us-img.png"
+      ]
+    },
+    "cleanroompanels.html": {
+      "title": "Clean Room Modular Panels",
+      "description": "AEMS clean rooms are unique in their design of Modular Panel System specifically designed fo suit all applications to meet industry requirements,while maintaining modular flexibility. AEMS provides a complete range of clean room Modular Panels and Doors with progressive and non progressive designs to suite your needs. AEMS takes very much care in designing wide range of options in panel selections.The ceilings are designed to fit every requirement with quality standards, which are of suspension type witlh walkable or non-walkable designs.",
+      "images": [
+        "assets/img/about-us-img.png"
+      ]
+    },
+    "clients.html": {
+      "title": "Clients",
+      "description": "AEMS provides turnkey solutions in clean room technology and customized environmental control systems for Pharmaceutical, infrastructure, healthcare facilities.",
+      "images": [
+        "assets/img/c1.png",
+        "assets/img/c2.png",
+        "assets/img/c3.png",
+        "assets/img/c4.png",
+        "assets/img/c5.png",
+        "assets/img/c6.png",
+        "assets/img/c7.png",
+        "assets/img/c8.png",
+        "assets/img/c9.png",
+        "assets/img/c10.png",
+        "assets/img/c11.png",
+        "assets/img/c12.png",
+        "assets/img/c13.png",
+        "assets/img/c14.png",
+        "assets/img/c15.png",
+        "assets/img/c16.png",
+        "assets/img/c17.png",
+        "assets/img/c18.png",
+        "assets/img/c19.png",
+        "assets/img/c20.png"
+      ]
+    },
+    "contact.html": {
+      "title": "Contact Us",
+      "description": "AEMS is a customized clean room solutions provider. Since its foundation, AEMS has sophisticated a comprehensive understanding and expertise of executing Clean Room Solutions, Turnkey HVAC and clean room.",
+      "images": [
+        "assets/img/about-us-img.png"
+      ]
+    },
+    "dynamicpassbox.html": {
+      "title": "Dynamic Pass Box",
+      "description": "AEMS is one of the best Dynamic Pass Box Manufacturers, Supplier. Our precision-engineered Dynamic Pass Box assists in transfer of materials driven through a controlled environment but without much personnel movement. Furthermore, this box helps in prevention of contaminants entrance either in the clean room or between various classified areas. Dynamic Pass Box that we deliver in the market is accessible at most economical prices.",
+      "images": [
+        "assets/img/dynamicpassbox.png"
+      ]
+    },
+    "facilityengservices.html": {
+      "title": "Facility Engineering Maintenance Services",
+      "description": "We understand the needs of the sector, both pharmaceutical and healthcare sectors. We provide the support manpower for the following services:",
+      "images": [
+        "assets/img/facility.png"
+      ]
+    },
+    "galvanizedironCR.html": {
+      "title": "Galvanized Iron Clean Room Partitions",
+      "description": "AEMS Modular Clean Room Systems interface with floors, ceilings, and mechanical components to provide a world class -clean room environment with effective control of airflow, pressure, temperature, humidity and filtration. They can be customized to match specific requirements and provide a cost-effective alternative to conventional construction without compromising quality, durability or efficiency. Modular clean rooms also utilize a flexible design that allows for fast, easy installation in a system that can be expanded or relocated as need be",
+      "images": [
+        "assets/img/galvanised.png"
+      ]
+    },
+    "horizontallaminarflow.html": {
+      "title": "Horizontal Laminar Air Flow Unit",
+      "description": "We make quality Horizontal Laminar Air Flow Unit. Horizontal Laminar Air Flow Unit that we deliver in the market is known for its robust construction, smooth functioning and unsurpassable performance. Manufactured using high grade materials, our Horizontal Laminar Air Flow Units are high on demand in the market.",
+      "images": [
+        "assets/img/horizontal-l-f.png"
+      ]
+    },
+    "hvacservices.html": {
+      "title": "HVAC Systems Suppliers",
+      "description": "AEMS IS Expert in the HVAC Systems Suppliers. AEMS Engineers is an expert in Air Conditioning, Ventilation Solutions such as installation, testing, commissioning, supply, service, maintenance and design also. It is for all industrial and domestic clean room environments.",
+      "images": [
+        "assets/img/hvac-system.png"
+      ]
+    },
+    "hvacsystems.html": {
+      "title": "HVAC Systems",
+      "description": "The Cleanroom HVAC system is a blend of many elements that are to be carefully chosen to deliver required environmental conditions . Assured all these elements include Fillitra1ion levels. Blower and Motor Assembly, Cooling and heating coils, duct work, suppty and return modules, filters. grills, diffusers and dampers wtiich distribute controlled and conditionaed air to the required space.",
+      "images": [
+        "assets/img/hvac-system.png"
+      ]
+    },
+    "index.html": {
+      "title": "Clean Room Technology",
+      "description": "HVAC SYSTEMS",
+      "images": [
+        "assets/img/hvac-system.png",
+        "assets/img/about-us-img.png",
+        "assets/img/facilityeng-home.png",
+        "assets/img/mep-home.png",
+        "assets/img/aems1.png",
+        "assets/img/aems2.png",
+        "assets/img/aems3.png",
+        "assets/img/home-vision-mission.png",
+        "assets/img/home-crp.png",
+        "assets/img/home-ahu.png",
+        "assets/img/home-passbox.png",
+        "assets/img/home-airshower.png",
+        "assets/img/c1.png",
+        "assets/img/c2.png",
+        "assets/img/c3.png",
+        "assets/img/c4.png",
+        "assets/img/c5.png",
+        "assets/img/c6.png",
+        "assets/img/c7.png",
+        "assets/img/c8.png",
+        "assets/img/c9.png",
+        "assets/img/c10.png",
+        "assets/img/c11.png",
+        "assets/img/c12.png",
+        "assets/img/c13.png",
+        "assets/img/c14.png",
+        "assets/img/c15.png",
+        "assets/img/c16.png",
+        "assets/img/c17.png",
+        "assets/img/c18.png",
+        "assets/img/c19.png",
+        "assets/img/c20.png",
+        "assets/img/affiliations-2.png",
+        "assets/img/affiliations-3.png",
+        "assets/img/affiliations-4.png",
+        "assets/img/affiliations-1.png"
+      ]
+    },
+    "labfurniture.html": {
+      "title": "Lab Furniture",
+      "description": "Our range of Laboratory Furnitures are designed impeccably after studying the usage patterns of the users over a period of time. All our products in this range are engrained with our philosophy of seamlessly integrating utilitarian functionality, user friendliness and eye catching aesthetics. All these are accomplished with durability as the core design criteria. We ensure that all these products seamlessly blend and effortlessly integrate with our other Cleanroom products & panels.",
+      "images": [
+        "assets/img/lab-furniture.png"
+      ]
+    },
+    "mepcontractors.html": {
+      "title": "MEP Contractors",
+      "description": "AEMS is one of the well known MEP Contractors who is offering complete MEP (Mechanical, Electrical, & Plumbing) consulting services.",
+      "images": [
+        "assets/img/mep.png"
+      ]
+    },
+    "reverselaminarflow.html": {
+      "title": "Reverse Laminar Air Flow Unit",
+      "description": "The Reverse Laminar Air Flow is ideal for Operator Protection, Product Protection and Environment Protection. Based on the smooth working profile and high-end performance of our Reverse Laminar Air Flow, Furthermore, Reverse Laminar Air Flow can be customized to suit the precise requirements of the clients.",
+      "images": [
+        "assets/img/reverse-l-f.png"
+      ]
+    },
+    "service.html": {
+      "title": "SERVICES",
+      "description": "AEMS is one stop solution to all your MEP and Clean Room Requirements. From classifying your requirements, to understanding Global Trends, Conducting critical analysis, understanding possibility, conceptualization to creating world class clean rooms.",
+      "images": []
+    },
+    "ssfurnitures.html": {
+      "title": "SS Furnitures",
+      "description": "SS Computer Table",
+      "images": [
+        "assets/img/ssf1.png",
+        "assets/img/ssf2.png",
+        "assets/img/ssf3.png",
+        "assets/img/ssf4.png",
+        "assets/img/ssf5.png",
+        "assets/img/ssf6.png",
+        "assets/img/ssf7.png",
+        "assets/img/ssf8.png",
+        "assets/img/ssf9.png",
+        "assets/img/ssf10.png",
+        "assets/img/ssf11.png",
+        "assets/img/ssf12.png",
+        "assets/img/ssf13.png",
+        "assets/img/ssf14.png"
+      ]
+    },
+    "staticpassbox.html": {
+      "title": "Static Pass Box",
+      "description": "AEMS offering supreme quality Static Pass Box, which is made in compliance with world class standards. Static Pass Box is specifically designed that aids in the material transfer without much personnel movement. Furthermore, the Static Pass Box also acts as a control for entrance of contaminants in clean room and other classified areas",
+      "images": [
+        "assets/img/staticpassbox.png"
+      ]
+    },
+    "validations.html": {
+      "title": "Validations",
+      "description": "AEMS offers a complete Clean room validation process to ensure that your controlled environment is performing as per user specifications. All testing,reports and certification is regulated by ou operating process which constitute port of our Quality Manual.",
+      "images": [
+        "assets/img/validations.png"
+      ]
+    },
+    "verticallaminarflow.html": {
+      "title": "Vertical Laminar Air Flow Unit",
+      "description": "Vertical Laminar Air Flow Unit we manufacture, supply and fabricated using best quality materials. The Vertical Laminar Air Flow Unit offered by us is widely demand owing to its high end performance and reliability. Moreover, effort able price has been fixed for the Vertical Laminar Air Flow Unit",
+      "images": [
+        "assets/img/vertical-l-f.png"
+      ]
+    }
+  }
+}

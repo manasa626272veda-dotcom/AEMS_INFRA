@@ -31,3 +31,6 @@
  .viewer-zoom button:hover{transform:translateY(-2px)}
 }
 @keyframes aems-menu-in{from{transform:translateY(-6px)}to{transform:translateY(0)}}
+
+/* React owns the hosts; Three.js and photo fitting own only their descendants. */
+.react-photo-host{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none}.react-dialog-photo{position:relative;width:100%;height:min(78vh,900px)}

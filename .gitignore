@@ -6,3 +6,7 @@ __pycache__/
 preview*.log
 qa/
 outputs/
+
+node_modules/
+
+migration/
