@@ -8,5 +8,6 @@ qa/
 outputs/
 
 node_modules/
+.vercel
 
 migration/
