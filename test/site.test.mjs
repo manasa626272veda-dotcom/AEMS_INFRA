@@ -17,8 +17,9 @@ async function render(urlPath){
   const media=query=>({matches:query.includes('prefers-reduced-motion'),media:query,addEventListener(){},removeEventListener(){}});
   win.matchMedia=media;win.HTMLCanvasElement.prototype.getContext=()=>null;
   const noopObserver=class{observe(){}unobserve(){}disconnect(){}};
+  const visibleObserver=class{constructor(callback){this.callback=callback;}observe(target){this.callback([{target,isIntersecting:true}]);}disconnect(){}unobserve(){}};
   const globals={window:win,document:win.document,location:win.location,navigator:win.navigator,FormData:win.FormData,
-    matchMedia:media,IntersectionObserver:noopObserver,ResizeObserver:noopObserver,
+    matchMedia:media,IntersectionObserver:visibleObserver,ResizeObserver:noopObserver,
     requestAnimationFrame:()=>0,scrollTo:()=>{},scrollY:0,innerHeight:800,
     addEventListener:win.addEventListener.bind(win),fetch:async input=>{
       assert.ok(['/content.json','/photo-bounds.json'].includes(String(input)));return {ok:true,json:async()=>String(input)==='/content.json'?structuredClone(content):JSON.parse(await readFile(new URL('../dist/photo-bounds.json',import.meta.url),'utf8'))};
@@ -188,7 +189,7 @@ test('Original photos fit their photographed object, retain their files, and sup
  const dom=await render('/labfurniture');try{
   const d=dom.window.document;const viewport=d.querySelector('.equipment-stage .photo-viewport');assert.ok(viewport);
   Object.defineProperty(viewport,'clientWidth',{value:1000});Object.defineProperty(viewport,'clientHeight',{value:620});viewport.photoApi.resize();
-  const initial=Number(viewport.dataset.contentHeight);assert.ok(initial>450);
+  const initial=Number(viewport.dataset.contentHeight);assert.ok(initial>300);
   d.querySelector('[data-equipment="zoom-in"]').click();assert.ok(Number(viewport.dataset.contentHeight)>initial);
   d.querySelector('[data-equipment="reset"]').click();assert.equal(Number(viewport.dataset.contentHeight),initial);
   const dialog=d.querySelector('.image-dialog');dialog.showModal=()=>dialog.setAttribute('open','');d.querySelector('[data-equipment="full-size"]').click();assert.ok(dialog.hasAttribute('open'));

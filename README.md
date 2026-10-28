@@ -51,3 +51,11 @@ The enquiry form validates information and prepares an email link. Visitors revi
 Mobile/desktop navigation QA: `node test/mobile-priority.mjs`. The header component lives in `src/header.jsx`, shared SVG icons in `src/icons.jsx`, and the final responsive usability styles in `public/mobile.css`. The original Vercel configuration is preserved.
 
 The fixed mobile contact bar is removed. Run `node test/menu-scroll.mjs` for the regression covering the menu after scrolling and the absence of a bottom bar/gap.
+
+## Equipment inspection studio
+
+The product viewers now support two-axis orbiting, touch pinch zoom, front/side/top/perspective cameras, component picking with descriptions, animated exploded assemblies, keyboard inspection and a full-screen view. Models add construction detail such as filters, framing, cabinet fronts, hardware, worktops, a recessed laboratory sink and fittings. Facility viewers support picking air treatment/distribution/utility systems. These remain illustrative models, not manufacturer CAD twins.
+
+`src/lib/equipment-inspection.js` owns camera fitting, selection, touch interactions and viewer cleanup. GPU viewers initialize near the viewport and stationary paused views stop rendering until an interaction or resize requires an update. Reduced-motion preferences are supported.
+
+Additional QA: `node test/button-contrast.mjs`, `node test/inspection-browser.mjs`, and `node test/facility-inspection.mjs`. Browser QA requires the existing dependencies under `qa/`.

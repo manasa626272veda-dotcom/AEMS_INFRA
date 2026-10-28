@@ -40,3 +40,15 @@ Chromium evidence does not establish Safari/Firefox compatibility or real-device
 ## Vector arrow upgrade
 
 Replaced 42 remaining text-based action arrows with local SVG icons, preventing mobile platforms from rendering boxed arrow emoji. Service and product card arrows use consistent 44px tonal circles with borders, 21px vector arrows and restrained pointer hover feedback. Labelled links retain their accessible names. All 12 functional tests pass; `node test/arrows-browser.mjs` verifies service/product arrows at 390px and 1440px with no emoji, page errors or horizontal overflow.
+
+## Readable buttons and interactive 3D inspection
+
+- Fixed the article-link rule overriding CTA text color/underline. All button variants have explicit foreground/background roles, minimum 48px height and 15px text, including hover, focus and visited states.
+- `test/button-contrast.mjs`: all 26 pages at 390px and 1440px, 600 visible button states tested across normal/hover/keyboard focus. Minimum measured foreground/background contrast is 8.11:1; no button labels are underlined or smaller than 14px (header CTA) / 15px (main buttons).
+- Product models: added filter media, section framing, grouped control interfaces, laboratory drawers and handles, worktop opening/recessed sink and faucet, storage shelves and castors. Material names remain illustrative and avoid inventing manufacturer grades. Original photos and specifications are retained.
+- All 14 product models render in actual Chromium WebGL without page errors. Live mobile/desktop checks on AHU and laboratory furniture compare rendered images for camera presets, exploded views and pinch zoom; mesh raycasting, keyboard part inspection, component descriptions, reset and expanding/collapsing the viewer are verified. Default camera framing accounts for all bounding-box corners, avoiding clipping.
+- Facility models use a neutral studio environment and support direct system picking, informative airflow/layer controls and reset. Mobile and desktop checks pass, including live contrast checks. Fixed overlap between facility layer buttons and pause/reset controls.
+- Deferred viewer initialization, paused-view redraw skipping, mobile pixel-ratio/shadow limits, and disposal of viewers/observers/context resources reduce unnecessary GPU work. No real-device frame-rate claim is made.
+- Re-ran 12 functional tests, 208 responsive layout checks, 52 page contrast scans, live equipment/facility contrast checks, and normal/reduced-motion interaction scenarios. No page overflow or JavaScript page errors were found in the tested states.
+
+Full-screen inspection also keeps its exit action available when switching to the original photo. A CSS full-screen fallback is tested in Chromium with the native API disabled, including Escape cleanup and removal of modal attributes; this is not a physical Safari-device claim. The final mobile controls use two rows so camera/inspection actions remain visible without a cropped horizontal toolbar.
