@@ -21,7 +21,7 @@ async function render(urlPath){
     matchMedia:media,IntersectionObserver:noopObserver,ResizeObserver:noopObserver,
     requestAnimationFrame:()=>0,scrollTo:()=>{},scrollY:0,innerHeight:800,
     addEventListener:win.addEventListener.bind(win),fetch:async input=>{
-      assert.equal(String(input),'/content.json');return {ok:true,json:async()=>structuredClone(content)};
+      assert.ok(['/content.json','/photo-bounds.json'].includes(String(input)));return {ok:true,json:async()=>String(input)==='/content.json'?structuredClone(content):JSON.parse(await readFile(new URL('../dist/photo-bounds.json',import.meta.url),'utf8'))};
     }};
   for(const [name,value] of Object.entries(globals))Object.defineProperty(globalThis,name,{value,writable:true,configurable:true});
   const originalError=console.error;
@@ -178,3 +178,19 @@ test('HTTP requests succeed for every page variant, aliases and required assets'
   }finally{await new Promise(resolve=>server.close(resolve));}
 });
 const fetchNative=globalThis.fetch;
+
+test('Original photos fit their photographed object, retain their files, and support fallback zoom',async()=>{
+ const measurements=JSON.parse(await readFile(new URL('../dist/photo-bounds.json',import.meta.url),'utf8'));
+ for(const name of ['lab-furniture.png','reverse-l-f.png']){
+  const m=measurements['assets/img/'+name];assert.ok(m);assert.ok(m.bounds[2]-m.bounds[0]<m.width*.6);assert.ok(m.bounds[3]-m.bounds[1]>m.height*.8);
+ }
+ const dom=await render('/labfurniture');try{
+  const d=dom.window.document;const viewport=d.querySelector('.equipment-stage .photo-viewport');assert.ok(viewport);
+  Object.defineProperty(viewport,'clientWidth',{value:1000});Object.defineProperty(viewport,'clientHeight',{value:620});viewport.photoApi.resize();
+  const initial=Number(viewport.dataset.contentHeight);assert.ok(initial>450);
+  d.querySelector('[data-equipment="zoom-in"]').click();assert.ok(Number(viewport.dataset.contentHeight)>initial);
+  d.querySelector('[data-equipment="reset"]').click();assert.equal(Number(viewport.dataset.contentHeight),initial);
+  const dialog=d.querySelector('.image-dialog');dialog.showModal=()=>dialog.setAttribute('open','');d.querySelector('[data-equipment="full-size"]').click();assert.ok(dialog.hasAttribute('open'));
+  assert.equal(d.querySelector('.brand img').getAttribute('src'),'assets/img/AEMS_logo.png');
+ }finally{dom.window.close();}
+});

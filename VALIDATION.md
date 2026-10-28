@@ -17,10 +17,19 @@ Validated on 28 October 2026.
 - 26 pages × 3 route forms = 78 DOM renderings.
 - 4,428 internal link instances checked; image and fragment targets exist.
 - 117 HTTP page URLs checked, plus scripts, styles, data and 404 responses.
-- 11 functional tests pass with no failures, including solution tabs, keyboard navigation, equipment selection and full-size image viewing.
+- 12 functional tests pass with no failures, including solution tabs, keyboard navigation, equipment selection and full-size image viewing.
 - 65 original PNGs validated and six original specification tables retained.
 - Two high-resolution concept assets added, with original photos retained and visible concept labels.
 
-## Verification limit
+## Responsive and visual verification
 
-DOM and HTTP tests do not verify final visual composition, GPU output or animation smoothness. In this pass the available project browser window closed before visual inspection; the local preview was opened for user review. No browser security controls were bypassed.
+- Isolated Chromium: all 26 pages checked at 320, 390, 768, 1024, 1440 and 1920 pixels (156 checks). No horizontal page overflow, broken loaded images or JavaScript page errors.
+- Axe color-contrast scans: every page at 390 and 1440 pixels (52 scans), with zero reported contrast violations after corrections.
+- Actual WebGL canvases rendered at 390 and 1440 pixels. Photo/model switching, zoom, reset, full-size modal, Escape and mobile navigation passed in Chromium.
+- Product photo screenshots visually inspected at phone and desktop sizes. Lab photograph content is 464px high in the desktop viewer, compared with approximately 186px in the supplied screenshot.
+- Original AEMS logo SHA256 matches the original website download: fc6ac846074a1b57239a0e4117b5f1d1b2c6ea984f70b3c0620892057b7df430.
+- No original PNG files were modified. Empty embedded photo margins are measured and excluded from fitting; the complete product remains visible. Fonts are local.
+
+## Limits
+
+Chromium checks do not establish Safari/Firefox compatibility or real-device animation performance. Original low-resolution photographs remain limited by their original resolution. The enquiry form prepares an email in the visitor's mail app; it does not send automatically. Concept models illustrate equipment types and do not replace engineering specifications.

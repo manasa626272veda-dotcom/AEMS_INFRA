@@ -32,7 +32,7 @@ References: https://www.tasteskill.dev/, https://gsap.com/, https://21st.dev/, h
 
 Run `python prepare.py` and `python validate.py`. For the functional suite, first run `npm --prefix qa install --no-audit --no-fund jsdom`, then `node --test test/site.test.mjs`.
 
-The suite covers 78 DOM page renderings (26 pages in three URL forms), 4,335 internal link instances, all referenced image and fragment targets, 117 HTTP page URLs, aliases, proper 404s, catalogue filters/search, mobile navigation and Escape, product enquiry selection, contact validation and email preparation, and graceful WebGL fallback. It uses an isolated DOM test environment and does not claim a visual browser or GPU-rendering verification.
+The suite covers 78 DOM page renderings (26 pages in three URL forms), 4,428 internal link instances, all referenced image and fragment targets, 117 HTTP page URLs, aliases, proper 404s, catalogue filters/search, mobile navigation and Escape, product enquiry selection, contact validation and email preparation, and graceful WebGL fallback. The DOM suite uses an isolated environment. Separate Chromium layout, contrast and live WebGL interaction checks are documented below.
 
 ## Site coverage
 
@@ -52,6 +52,14 @@ Original page snapshots are in `research/original`. `content.json` contains the 
 
 The 3D facility is a conceptual illustration, not an exact digital twin of a client facility. Technical wording and dimensions from the original website have been retained; any original typographical errors need client engineering review. The source header phone number (040-48586464) is used; the original footer had a different visual spacing. Client and affiliation logos are preserved without inventing names or new endorsements. Existing third-party placeholders for social links were omitted.
 
-The website runs without a build step or npm dependencies. Google Fonts is an optional external request with local system-font fallback. All essential JS and images are hosted locally.
+The website runs without a build step or npm dependencies. Google Sans Flex fonts are hosted locally with system-font fallback. All essential JS and images are hosted locally.
 
 This is a separately hosted redesign; the original aemsinfra.com deployment and domain have not been modified.
+
+## Responsive image and readability refinement
+
+The unchanged original AEMS logo is used in the navy header and footer. `analyze_photos.py` measures empty white margins in the original photos and writes `dist/photo-bounds.json`; `product-photo.js` fits the complete photographed object into the available viewport without changing source image bytes. The product viewer is full width, with zoom, reset and full-size photo controls, including when WebGL is unavailable. Original low-resolution images retain their source resolution.
+
+Browser QA dependencies: `npm --prefix qa install --no-audit --no-fund jsdom playwright @axe-core/playwright`, then `node qa/node_modules/playwright/cli.js install chromium`. Run `node test/browser-audit.mjs` for isolated localhost layout and contrast checks. This exercises the photo fallback at six viewport sizes and writes reports/screenshots to ignored `outputs/ui-audit`.
+
+Run `node test/browser-controls.mjs` to check live WebGL/photo switching, zoom/reset, modal Escape and mobile navigation in isolated Chromium at 390px and 1440px.

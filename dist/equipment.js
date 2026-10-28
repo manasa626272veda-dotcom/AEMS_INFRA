@@ -1,3 +1,4 @@
+import {mountProductPhoto,openProductPhoto} from './product-photo.js';
 import * as THREE from './assets/three.module.js';
 import {RoomEnvironment} from './assets/RoomEnvironment.js';
 import {RoundedBoxGeometry} from './assets/RoundedBoxGeometry.js';
@@ -8,7 +9,18 @@ export function createEquipment(container, filename, imageUrl) {
   const shell=container.closest('.equipment-stage');
   let renderer;
   try {renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}
-  catch {container.innerHTML=`<img class="stage-image" src="${imageUrl}" alt="Original AEMS product photograph">`;shell.querySelectorAll('[data-equipment]').forEach(b=>{b.disabled=true;if(['model','photo'].includes(b.dataset.equipment))b.setAttribute('aria-pressed',String(b.dataset.equipment==='photo'));});const hint=shell.querySelector('.equipment-hint');if(hint)hint.textContent='Product photo · Interactive 3D unavailable on this device';return;}
+  catch {
+    container.hidden=true;
+    const fallback=mountProductPhoto(shell,imageUrl,{top:82,bottom:74,padding:18});let zoom=1;
+    shell.querySelectorAll('[data-equipment]').forEach(button=>{
+      const action=button.dataset.equipment;
+      if(['model','motion'].includes(action))button.disabled=true;
+      if(['model','photo'].includes(action))button.setAttribute('aria-pressed',String(action==='photo'));
+      button.addEventListener('click',()=>{if(action==='full-size')openProductPhoto(fallback.image);else if(action==='zoom-in')fallback.setZoom(zoom=Math.min(2.5,zoom+.2));else if(action==='zoom-out')fallback.setZoom(zoom=Math.max(.65,zoom-.2));else if(action==='reset')fallback.setZoom(zoom=1);});
+    });
+    const hint=shell.querySelector('.equipment-hint');if(hint)hint.textContent='Original product photograph · Open full size for a closer look';
+    return {destroy(){fallback.destroy();fallback.element.remove();}};
+  }
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
   container.append(renderer.domElement);
   const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(35,1,.1,100);camera.position.set(6,3.5,7);camera.lookAt(0,1.4,0);
@@ -82,14 +94,14 @@ export function createEquipment(container, filename, imageUrl) {
   const bounds=new THREE.Box3().setFromObject(root);const size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());root.position.set(-center.x,-bounds.min.y,-center.z);const turntable=new THREE.Group();scene.add(turntable);turntable.add(root);
   const target=new THREE.Vector3(0,size.y*.48,0);
   const plane=new THREE.Mesh(new THREE.PlaneGeometry(50,50),new THREE.ShadowMaterial({opacity:.2}));plane.rotation.x=-Math.PI/2;plane.position.y=-.01;plane.receiveShadow=true;scene.add(plane);
-  const photo=document.createElement('img');photo.className='stage-image';photo.src=imageUrl;photo.alt='Original AEMS product photograph';photo.hidden=true;container.after(photo);
+  const photoApi=mountProductPhoto(shell,imageUrl,{top:82,bottom:74,padding:18});const photo=photoApi.element;photo.hidden=true;
   let angle=.12,paused=matchMedia('(prefers-reduced-motion: reduce)').matches,mode='model',dragging=false,lastX=0,visible=true,zoom=1,baseDistance=7,disposed=false,frameId;
   const viewDirection=new THREE.Vector3(.65,.32,1).normalize();
   const resize=new ResizeObserver(()=>{const w=container.clientWidth,h=container.clientHeight;if(w<1||h<1)return;renderer.setSize(w,h,false);camera.aspect=w/h;const frameHeight=Math.max(size.y*1.5,(size.x+size.z*.65)/camera.aspect*1.17);baseDistance=frameHeight/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)));camera.updateProjectionMatrix();});resize.observe(container);
   container.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;container.setPointerCapture(e.pointerId);});container.addEventListener('pointermove',e=>{if(dragging){angle+=(e.clientX-lastX)*.009;lastX=e.clientX;}});container.addEventListener('pointerup',()=>dragging=false);container.addEventListener('pointercancel',()=>dragging=false);
   container.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','+','-','='].includes(e.key)){e.preventDefault();if(e.key==='Home'){angle=.12;zoom=1;}else if(['+','='].includes(e.key))zoom=Math.max(.65,zoom-.1);else if(e.key==='-')zoom=Math.min(1.6,zoom+.1);else angle+=(e.key==='ArrowLeft'?-.2:.2);}});
-  shell.querySelectorAll('[data-equipment]').forEach(button=>button.addEventListener('click',()=>{const action=button.dataset.equipment;if(action==='reset'){angle=.12;zoom=1;return;}if(action==='zoom-in'){zoom=Math.max(.65,zoom-.12);return;}if(action==='zoom-out'){zoom=Math.min(1.6,zoom+.12);return;}if(action==='motion'){paused=!paused;button.setAttribute('aria-pressed',String(paused));button.textContent=paused?'Play motion':'Pause motion';return;}mode=action;container.hidden=mode==='photo';photo.hidden=mode!=='photo';shell.querySelectorAll('[data-equipment="model"],[data-equipment="photo"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.equipment===mode)));}));
+  shell.querySelectorAll('[data-equipment]').forEach(button=>button.addEventListener('click',()=>{const action=button.dataset.equipment;if(action==='full-size'){openProductPhoto(photoApi.image);return;}if(action==='reset'){angle=.12;zoom=1;photoApi.setZoom(1);return;}if(action==='zoom-in'){zoom=Math.max(.65,zoom-.12);photoApi.setZoom(1/zoom);return;}if(action==='zoom-out'){zoom=Math.min(1.6,zoom+.12);photoApi.setZoom(1/zoom);return;}if(action==='motion'){paused=!paused;button.setAttribute('aria-pressed',String(paused));button.textContent=paused?'Play motion':'Pause motion';return;}mode=action;container.hidden=mode==='photo';photo.hidden=mode!=='photo';photoApi.resize();const hint=shell.querySelector('.equipment-hint');if(hint)hint.textContent=mode==='photo'?'Original product photograph · Open full size for a closer look':'Drag to rotate · Use the zoom controls to inspect';shell.querySelectorAll('[data-equipment="model"],[data-equipment="photo"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.equipment===mode)));}));
   const visibilityObserver=new IntersectionObserver(entries=>visible=entries[0].isIntersecting);visibilityObserver.observe(shell);
   let prev=performance.now();function frame(now){if(disposed)return;frameId=requestAnimationFrame(frame);const delta=Math.min((now-prev)/1000,.06);prev=now;if(!visible||document.hidden||mode==='photo')return;if(!paused&&!dragging)angle+=delta*.09;turntable.rotation.y=angle;if(fan&&!paused)fan.rotation.z+=delta*1.8;camera.position.copy(viewDirection).multiplyScalar(baseDistance*zoom).add(target);camera.lookAt(target);renderer.render(scene,camera);}frameId=requestAnimationFrame(frame);
-  return {destroy(){disposed=true;cancelAnimationFrame(frameId);resize.disconnect();visibilityObserver.disconnect();const materials=new Set();root.traverse(obj=>{obj.geometry?.dispose();if(obj.material)materials.add(obj.material);});materials.forEach(m=>m.dispose());brushed.dispose();scene.environment?.dispose();renderer.dispose();renderer.domElement.remove();photo.remove();}};
+  return {destroy(){disposed=true;cancelAnimationFrame(frameId);resize.disconnect();visibilityObserver.disconnect();const materials=new Set();root.traverse(obj=>{obj.geometry?.dispose();if(obj.material)materials.add(obj.material);});materials.forEach(m=>m.dispose());brushed.dispose();scene.environment?.dispose();renderer.dispose();renderer.domElement.remove();photoApi.destroy();photo.remove();}};
 }
