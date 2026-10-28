@@ -97,7 +97,7 @@ export function createFacility(container) {
   }));
   let visible=true;new IntersectionObserver(entries=>visible=entries[0].isIntersecting).observe(container);
   let prev=performance.now();
-  function animate(now){requestAnimationFrame(animate);const delta=Math.min((now-prev)/1000,.05);prev=now;if(!visible||document.hidden)return;if(!paused)t+=delta;
+  function animate(now){requestAnimationFrame(animate);const delta=Math.max(0,Math.min((now-prev)/1000,.05));prev=now;if(!visible||document.hidden)return;if(!paused)t+=delta;
     if(!dragging&&!paused)angle+=Math.sin(t*.25)*.00014;
     ahu.position.y=THREE.MathUtils.lerp(ahu.position.y,roofTarget,.06);vents.position.y=THREE.MathUtils.lerp(vents.position.y,roofTarget*.55,.06);
     fan.rotation.z=paused?fan.rotation.z:t*2.5;

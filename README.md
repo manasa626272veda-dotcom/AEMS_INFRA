@@ -63,3 +63,5 @@ The unchanged original AEMS logo is used in the navy header and footer. `analyze
 Browser QA dependencies: `npm --prefix qa install --no-audit --no-fund jsdom playwright @axe-core/playwright`, then `node qa/node_modules/playwright/cli.js install chromium`. Run `node test/browser-audit.mjs` for isolated localhost layout and contrast checks. This exercises the photo fallback at six viewport sizes and writes reports/screenshots to ignored `outputs/ui-audit`.
 
 Run `node test/browser-controls.mjs` to check live WebGL/photo switching, zoom/reset, modal Escape and mobile navigation in isolated Chromium at 390px and 1440px.
+
+Motion QA: `node test/motion-browser.mjs` checks normal/reduced motion, live preference changes, solution and photo transitions, accordion/modal behavior, readable text and horizontal overflow at phone and desktop widths. Motion uses the existing local GSAP bundle and the browser animation API.

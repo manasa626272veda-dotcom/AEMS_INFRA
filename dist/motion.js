@@ -1,33 +1,38 @@
-// Progressive enhancement: content and links work before the motion library loads.
+// Motion is progressive enhancement: text never starts transparent or hidden.
+const swaps=new WeakMap();
+const activeSwaps=new Set();
+export function animateSwap(element,{media=false}={}){
+  if(!element||matchMedia('(prefers-reduced-motion: reduce)').matches||typeof element.animate!=='function')return;
+  swaps.get(element)?.cancel();
+  const animation=element.animate(media?[{transform:'scale(.985)'},{transform:'scale(1)'}]:[{transform:'translateY(9px)'},{transform:'translateY(0)'}],{duration:media?360:300,easing:'cubic-bezier(.2,.7,.2,1)'});
+  swaps.set(element,animation);activeSwaps.add(animation);
+  animation.finished.then(()=>activeSwaps.delete(animation),()=>activeSwaps.delete(animation));
+}
+
 export function initMotion(){
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const progress=document.createElement('div');progress.className='reading-progress';progress.setAttribute('aria-hidden','true');document.body.append(progress);
   const updateProgress=()=>{const total=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${total>0?Math.min(1,scrollY/total):0})`;};
   addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);updateProgress();
+  reduced.addEventListener('change',()=>{if(reduced.matches){activeSwaps.forEach(a=>a.cancel());activeSwaps.clear();}});
   const launch=()=>{
-    const {gsap,ScrollTrigger}=window;
-    if(!gsap||!ScrollTrigger||reduced.matches)return;
+    const {gsap,ScrollTrigger}=window;if(!gsap||!ScrollTrigger)return;
     gsap.registerPlugin(ScrollTrigger);
     const media=gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)',()=>{
+      const distance=innerWidth<768?12:20;
       const intro=document.querySelector('.cinema-content,.hero-copy,.page-hero .wrap');
-      if(intro){gsap.from(intro.children,{y:24,duration:1,stagger:.1,ease:'power3.out',clearProps:'transform,opacity'});}
-      const stage=document.querySelector('.hero .scene-shell,.equipment-showcase,.service-experience');
-      if(stage)gsap.from(stage,{y:25,duration:1.25,delay:.2,ease:'power3.out',clearProps:'transform,opacity'});
-      document.querySelectorAll('.section-head,.about-strip,.mission-grid,.contact-grid,.logo-gallery').forEach(el=>{
-        gsap.from(el,{y:32,duration:.9,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:el,start:'top 92%',once:true}});
+      if(intro)gsap.from(intro.children,{y:distance,duration:.75,stagger:.075,ease:'power3.out',clearProps:'transform'});
+      const cinema=document.querySelector('.cinema-image');
+      if(cinema)gsap.from(cinema,{scale:1.035,duration:1.8,ease:'power2.out',clearProps:'transform'});
+      document.querySelectorAll('.section-head,.intro-grid,.about-strip,.mission-grid>div,.contact-info,.contact-form,.technical>h3,.technical>p,.technical>ul,.technical>.table-wrap,.technical-gallery,.logo-gallery,.equipment-layout,.facility-studio-heading,.faq-layout>div:first-child,.cta-box,.customer-cta>.wrap').forEach(el=>{
+        gsap.from(el,{y:distance,duration:.7,ease:'power3.out',clearProps:'transform',scrollTrigger:{trigger:el,start:'top 94%',once:true}});
       });
-      ScrollTrigger.batch('.service-card,.product-card',{start:'top 95%',once:true,onEnter:batch=>gsap.from(batch,{y:30,stagger:.07,duration:.8,ease:'power3.out',clearProps:'transform,opacity'})});
-      gsap.utils.toArray('.process-step').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>el.classList.add('step-reached')}));
-      media.add('(min-width: 901px) and (pointer: fine)',()=>{
-        const cinema=document.querySelector('.cinema-image');if(cinema)gsap.to(cinema,{scale:1.06,ease:'none',scrollTrigger:{trigger:'.cinema-hero',start:'top top',end:'bottom top',scrub:1}});
-        document.querySelectorAll('.about-image img').forEach(img=>gsap.to(img,{yPercent:5,scale:1.06,ease:'none',scrollTrigger:{trigger:img.parentElement,start:'top bottom',end:'bottom top',scrub:1}}));
-      });
-      const refresh=()=>ScrollTrigger.refresh();
-      document.fonts?.ready.then(refresh);document.querySelectorAll('img').forEach(img=>{if(!img.complete)img.addEventListener('load',refresh,{once:true});});
+      ScrollTrigger.batch('.service-card,.product-card,.intro-proof>div,.process-step',{start:'top 95%',once:true,onEnter:batch=>gsap.from(batch,{y:distance,stagger:.065,duration:.65,ease:'power3.out',clearProps:'transform'})});
+      document.querySelectorAll('.process-step').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:()=>el.classList.add('step-reached')}));
+      const refresh=()=>ScrollTrigger.refresh();document.fonts?.ready.then(refresh);
+      document.querySelectorAll('img').forEach(img=>{if(!img.complete)img.addEventListener('load',refresh,{once:true});});
     });
-    reduced.addEventListener('change',()=>{if(reduced.matches)media.revert();});
   };
-  // Deferred vendor scripts precede load. Avoid hiding content if a script fails.
   if(document.readyState==='complete')launch();else addEventListener('load',launch,{once:true});
 }

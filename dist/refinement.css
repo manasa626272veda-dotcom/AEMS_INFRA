@@ -11,3 +11,23 @@
 /* Verified text colors for both light surfaces and navy sections. */
 .page-hero p,.page-hero .breadcrumbs,.page-hero .breadcrumbs a,.page-hero .eyebrow{color:#d1e4ed}.header .mobile-toggle{background:#e0f1f4;color:#14374c}.intro-proof>div>span,.feature-number,.product-info small,.contact-block small{color:#176071}.solution-tabs button:not([aria-selected=true]),.filter:not([aria-pressed=true]){color:#405b6c}.solution-feature-copy>p,.solution-feature-copy>a:last-child:not(.button),.facility-studio-heading>p,.studio-legend,.studio-legend>small,.premium-process-grid .process-step p,.cta-box p,.technical td,.technical th,.side-links a,.contact-block a,.contact-block p{color:#405b6c}.solution-feature-copy>a:last-child:not(.button){font-size:14px}.discovery-selector button>span,.discovery-copy>small{color:#bdd6e4;font-size:12px}.premium-process-grid .process-number{color:#175269}.service-card .service-more,.equipment-copy .text-link{color:#145d71}.equipment-tools button[aria-pressed=true]:not([data-equipment=motion]){color:white}
 @media print{.header,.contact-rail,.back-top,.equipment-showcase,footer{display:none!important}.page-hero p,.page-hero .breadcrumbs,.page-hero .eyebrow{color:#14374c}}
+/* Restrained motion for an engineering portfolio. Text contrast stays constant. */
+@media(prefers-reduced-motion:no-preference){
+ .button,.nav-cta,.filter,.solution-tabs button,.viewer-zoom button,.equipment-tools button,.discovery-selector button,.product-card,.service-card,.gallery-zoom>span{transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s ease,background-color .2s ease,border-color .2s ease}
+ .button>span,.text-link>span,.product-bottom>span,.service-more,.product-open{transition:transform .22s ease}
+ .button:active,.viewer-zoom button:active{transform:scale(.98)}
+ .header nav.open{animation:aems-menu-in .2s ease-out}
+ .nav-drop[open]>.dropdown{animation:aems-menu-in .18s ease-out}
+ .premium-process-grid .process-step{position:relative}
+ .premium-process-grid .process-step:after{content:'';position:absolute;top:0;left:0;height:2px;width:100%;background:#197789;transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+ .premium-process-grid .process-step.step-reached:after{transform:scaleX(1)}
+ @supports(interpolate-size:allow-keywords){.faq-list details{interpolate-size:allow-keywords}.faq-list details::details-content{block-size:0;overflow:clip;transition:block-size .28s ease,content-visibility .28s allow-discrete}.faq-list details[open]::details-content{block-size:auto}}
+}
+@media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+ .product-card:hover,.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px #173e5114}
+ .button:hover,.nav-cta:hover{transform:translateY(-2px);box-shadow:0 5px 14px #123d5118}
+ .button:hover>span,.text-link:hover>span,.product-card:hover .product-bottom>span{transform:translateX(3px)}
+ .gallery-zoom:hover>span{transform:translateY(-3px)}
+ .viewer-zoom button:hover{transform:translateY(-2px)}
+}
+@keyframes aems-menu-in{from{transform:translateY(-6px)}to{transform:translateY(0)}}

@@ -33,3 +33,11 @@ Validated on 28 October 2026.
 ## Limits
 
 Chromium checks do not establish Safari/Firefox compatibility or real-device animation performance. Original low-resolution photographs remain limited by their original resolution. The enquiry form prepares an email in the visitor's mail app; it does not send automatically. Concept models illustrate equipment types and do not replace engineering specifications.
+
+## Animation refinement
+
+Added transform-only GSAP section and card entrances, a restrained hero image entrance, process line progression, pointer hover feedback, native accordion height transitions, and cancellable product/photo/modal transitions. Text remains at full opacity. No animations alter original photo fitting.
+
+`node test/motion-browser.mjs` checks the homepage and laboratory product page in isolated Chromium at 390px and 1440px with both normal and reduced-motion preferences, including switching reduced motion while a transition is active. The 12 functional tests remain passing.
+
+The live animation pass also caught and fixed a startup timing error: the first requestAnimationFrame timestamp can precede setup completion. Both 3D render loops clamp elapsed frame time to zero, preventing a negative airflow-curve position. Browser QA asserts there are no page errors.
