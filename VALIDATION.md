@@ -36,3 +36,7 @@ Chromium evidence does not establish Safari/Firefox compatibility or real-device
 - Menu Contact us now stays in the normal navigation scroll flow; it does not cover category links. Focus changes use preventScroll, and opening the menu resets its own internal scroll position.
 - Darkened secondary headings for clearer reading.
 - Re-ran all 12 functional tests, 208 layout checks, 52 page contrast scans and ten menu contrast scans. The all-page audit additionally opens the menu after scrolling on every route at 390px and checks that no contact bar exists. Four targeted pointer tests at 320, 390, 430 and 768px verify viewport coverage, closing/Escape, inert background, zero bottom padding and preserved scroll position.
+
+## Vector arrow upgrade
+
+Replaced 42 remaining text-based action arrows with local SVG icons, preventing mobile platforms from rendering boxed arrow emoji. Service and product card arrows use consistent 44px tonal circles with borders, 21px vector arrows and restrained pointer hover feedback. Labelled links retain their accessible names. All 12 functional tests pass; `node test/arrows-browser.mjs` verifies service/product arrows at 390px and 1440px with no emoji, page errors or horizontal overflow.
